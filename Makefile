@@ -17,11 +17,11 @@ gofumpt: vet ## Check linting with 'gofumpt'
 
 .PHONY: lines
 lines: ## Check long lines.
-	@golines -m 120 --dry-run readme/*.go
+	@go run github.com/segmentio/golines -m 120 --dry-run readme/*.go
 
 .PHONY: lines-fix
 lines-fix: lines ## Fix long lines
-	@golines -m 120 -w readme/*.go
+	@go run github.com/segmentio/golines -m 120 -w readme/*.go
 
 .PHONY: golangci-lint
 golangci-lint: ## Lint using 'golangci-lint'
