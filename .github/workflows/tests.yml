@@ -1,9 +1,5 @@
 name: "Lint & Test"
 on:
-  push:
-    branches:
-      - main
-      - add-gh-workflows
   pull_request:
     branches:
       - main
