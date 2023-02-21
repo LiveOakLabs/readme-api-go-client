@@ -10,7 +10,7 @@ function with a token provided to set up the API client.
 ```go
 package main
 
-import "github.com/liveoaklabs/readme-api-go-client/readme"
+import "github.com/lobliveoaklabs/readme-api-go-client/readme"
 
 const readmeAPIKey string = "rdme_xxxxxxxx..."
 
@@ -38,15 +38,9 @@ if specs == nil {
 }
 ```
 
-## Reference
-
-Refer to [`docs/README.md`](docs/README.md) for the Go package documentation.
-
 ## Development
 
 * Merge requests should merge into the `main` branch.
-* Use the GitLab labels _Patch_, _Minor_, and _Major_ as appropriate on a merge
-  request to tag the release according to [semantic versioning](https://semver.org/).
 * Refer to the [`Makefile`](Makefile) for helpful development tasks.
 
 This project uses a few [tools](readme/tools.go) for validating code quality and functionality:
@@ -60,5 +54,5 @@ This project uses a few [tools](readme/tools.go) for validating code quality and
 
 ## References
 
-* [Terraform provider for ReadMe](https://github.com/liveoaklabs/terraform-provider-readme):
+* [Terraform provider for ReadMe](https://github.com/lobliveoaklabs/terraform-provider-readme):
   Related project using this client library.

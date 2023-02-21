@@ -1,4 +1,4 @@
-module github.com/liveoaklabs/readme-api-go-client
+module github.com/lobliveoaklabs/readme-api-go-client
 
 go 1.19
 
@@ -7,7 +7,7 @@ require (
 	github.com/golangci/golangci-lint v1.51.2
 	github.com/princjef/gomarkdoc v0.4.1
 	github.com/stretchr/testify v1.8.1
-	golang.org/x/vuln v0.0.0-20230217204342-b91abcc5ae3c
+	golang.org/x/vuln v0.0.0-20230221181318-b1b4de0d2042
 	mvdan.cc/gofumpt v0.4.0
 )
 
