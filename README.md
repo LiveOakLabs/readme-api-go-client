@@ -38,6 +38,10 @@ if specs == nil {
 }
 ```
 
+## Reference
+
+Refer to <https://pkg.go.dev/github.com/lobliveoaklabs/readme-api-go-client> for the Go package documentation.
+
 ## Development
 
 * Merge requests should merge into the `main` branch.
