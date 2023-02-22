@@ -9,8 +9,7 @@ This is a Go client library for the [ReadMe.com](https://readme.com) API.
 
 ## Getting Started
 
-Import the package and call the [`readme.NewClient()`](docs/README.md#func-newclient)
-function with a token provided to set up the API client.
+Import the package and call the `readme.NewClient()` function with a token provided to set up the API client.
 
 ```go
 package main
@@ -29,8 +28,7 @@ func main() {
 
 ## Examples
 
-Using the [`APISpecification.GetAll()`](docs/README.md#func-apispecificationclient-getall)
-method to retrieve all API specifications for a project on ReadMe.com:
+Using the `APISpecification.GetAll()` method to retrieve all API specifications for a project on ReadMe.com:
 
 ```go
 specs, _, err := client.APISpecifications.GetAll()
