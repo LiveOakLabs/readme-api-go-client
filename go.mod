@@ -1,6 +1,6 @@
-module github.com/lobliveoaklabs/readme-api-go-client
+module github.com/liveoaklabs/readme-api-go-client
 
-go 1.19
+go 1.20
 
 require (
 	github.com/boumenot/gocover-cobertura v1.2.0
@@ -124,7 +124,7 @@ require (
 	github.com/jirfag/go-printf-func-name v0.0.0-20200119135958-7558a9eaa5af // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/julz/importas v0.1.0 // indirect
-	github.com/junk1tm/musttag v0.4.5 // indirect
+	github.com/junk1tm/musttag v0.5.0 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/kisielk/errcheck v1.6.3 // indirect
 	github.com/kisielk/gotool v1.0.0 // indirect

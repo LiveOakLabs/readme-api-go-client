@@ -1,9 +1,9 @@
 # Go Client for the ReadMe.com API
 
-[![Version](https://img.shields.io/github/v/release/lobliveoaklabs/readme-api-go-client)](https://github.com/lobliveoaklabs/readme-api-go-client/releases)
-[![CodeQL](https://github.com/lobliveoaklabs/readme-api-go-client/workflows/CodeQL/badge.svg)](https://github.com/lobliveoaklabs/readme-api-go-client/actions?query=workflow%3ACodeQL)
-[![Tests](https://github.com/lobliveoaklabs/readme-api-go-client/actions/workflows/tests.yml/badge.svg)](https://github.com/lobliveoaklabs/readme-api-go-client/actions/workflows/tests.yml)
-[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://pkg.go.dev/github.com/lobliveoaklabs/readme-api-go-client?tab=doc)
+[![Version](https://img.shields.io/github/v/release/liveoaklabs/readme-api-go-client)](https://github.com/liveoaklabs/readme-api-go-client/releases)
+[![CodeQL](https://github.com/liveoaklabs/readme-api-go-client/workflows/CodeQL/badge.svg)](https://github.com/liveoaklabs/readme-api-go-client/actions?query=workflow%3ACodeQL)
+[![Tests](https://github.com/liveoaklabs/readme-api-go-client/actions/workflows/tests.yml/badge.svg)](https://github.com/liveoaklabs/readme-api-go-client/actions/workflows/tests.yml)
+[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://pkg.go.dev/github.com/liveoaklabs/readme-api-go-client?tab=doc)
 
 This is a Go client library for the [ReadMe.com](https://readme.com) API.
 
@@ -15,7 +15,7 @@ function with a token provided to set up the API client.
 ```go
 package main
 
-import "github.com/lobliveoaklabs/readme-api-go-client/readme"
+import "github.com/liveoaklabs/readme-api-go-client/readme"
 
 const readmeAPIKey string = "rdme_xxxxxxxx..."
 
@@ -45,7 +45,7 @@ if specs == nil {
 
 ## Reference
 
-Refer to <https://pkg.go.dev/github.com/lobliveoaklabs/readme-api-go-client> for the Go package documentation.
+Refer to <https://pkg.go.dev/github.com/liveoaklabs/readme-api-go-client> for the Go package documentation.
 
 ## Contributing
 
@@ -53,7 +53,7 @@ Refer to [`CONTRIBUTING.md`](CONTRIBUTING.md) for information on contributing to
 
 ## Related
 
-[Terraform provider for ReadMe](https://github.com/lobliveoaklabs/terraform-provider-readme) uses this client library.
+The [Terraform provider for ReadMe](https://github.com/liveoaklabs/terraform-provider-readme) uses this client library.
 
 ## License
 

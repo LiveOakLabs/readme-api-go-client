@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/lobliveoaklabs/readme-api-go-client/readme"
+	"github.com/liveoaklabs/readme-api-go-client/readme"
 	"github.com/stretchr/testify/assert"
 )
 

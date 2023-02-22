@@ -3,8 +3,8 @@ package readme_test
 import (
 	"testing"
 
-	"github.com/lobliveoaklabs/readme-api-go-client/internal/testutil"
-	"github.com/lobliveoaklabs/readme-api-go-client/readme"
+	"github.com/liveoaklabs/readme-api-go-client/internal/testutil"
+	"github.com/liveoaklabs/readme-api-go-client/readme"
 	"github.com/stretchr/testify/assert"
 )
 
