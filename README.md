@@ -1,5 +1,10 @@
 # Go Client for the ReadMe.com API
 
+[![Version](https://img.shields.io/github/v/release/lobliveoaklabs/readme-api-go-client)](https://github.com/lobliveoaklabs/readme-api-go-client/releases)
+[![CodeQL](https://github.com/lobliveoaklabs/readme-api-go-client/workflows/CodeQL/badge.svg)](https://github.com/lobliveoaklabs/readme-api-go-client/actions?query=workflow%3ACodeQL)
+[![Tests](https://github.com/lobliveoaklabs/readme-api-go-client/actions/workflows/tests.yml/badge.svg)](https://github.com/lobliveoaklabs/readme-api-go-client/actions/workflows/tests.yml)
+[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://pkg.go.dev/github.com/lobliveoaklabs/readme-api-go-client?tab=doc)
+
 This is a Go client library for the [ReadMe.com](https://readme.com) API.
 
 ## Getting Started
@@ -42,21 +47,14 @@ if specs == nil {
 
 Refer to <https://pkg.go.dev/github.com/lobliveoaklabs/readme-api-go-client> for the Go package documentation.
 
-## Development
+## Contributing
 
-* Merge requests should merge into the `main` branch.
-* Refer to the [`Makefile`](Makefile) for helpful development tasks.
+Refer to [`CONTRIBUTING.md`](CONTRIBUTING.md) for information on contributing to this project.
 
-This project uses a few [tools](readme/tools.go) for validating code quality and functionality:
+## Related
 
-* [pre-commit](https://pre-commit.com/) for ensuring consistency and code quality before committing (external dependency).
-* [golangci-lint](https://golangci-lint.run/) for linting and formatting.
-* [gofumpt](https://github.com/mvdan/gofumpt) (is included with golangci-lint).
-* [gocover-cobertura](https://github.com/boumenot/gocover-cobertura) for code test coverage reporting.
-* [govulncheck](https://github.com/golang/vuln) for detecting vulnerabilities in Go packages.
-* [gomarkdoc](https://github.com/princjef/gomarkdoc) for generating the [Markdown docs](docs/README.md).
+[Terraform provider for ReadMe](https://github.com/lobliveoaklabs/terraform-provider-readme) uses this client library.
 
-## References
+## License
 
-* [Terraform provider for ReadMe](https://github.com/lobliveoaklabs/terraform-provider-readme):
-  Related project using this client library.
+This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
