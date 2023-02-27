@@ -7,7 +7,7 @@ require (
 	github.com/golangci/golangci-lint v1.51.2
 	github.com/princjef/gomarkdoc v0.4.1
 	github.com/segmentio/golines v0.11.0
-	github.com/stretchr/testify v1.8.1
+	github.com/stretchr/testify v1.8.2
 	golang.org/x/vuln v0.0.0-20230221181318-b1b4de0d2042
 	mvdan.cc/gofumpt v0.4.0
 )
