@@ -61,6 +61,8 @@ type Client struct {
 	CustomPage CustomPageService
 	// Doc implements the ReadMe Docs API for managing docs.
 	Doc DocService
+	// Image implements the ReadMe Image API for uploading images.
+	Image ImageService
 	// Project implements the ReadMe Project API for retrieving metadata about the project.
 	Project ProjectService
 	// Version implements the ReadMe Version API for managing versions.
@@ -96,6 +98,9 @@ type APIRequest struct {
 
 	// UseAuth toggles whether the request should use authentication or not.
 	UseAuth bool
+
+	// URL is a full URL string to use for the request as an alternative to Endpoint.
+	URL string
 }
 
 // APIResponse represents the response from a request to the ReadMe API.
@@ -168,6 +173,7 @@ func NewClient(token string, apiURL ...string) (*Client, error) {
 	client.Changelog = &ChangelogClient{client: client}
 	client.CustomPage = &CustomPageClient{client: client}
 	client.Doc = &DocClient{client: client}
+	client.Image = &ImageClient{client: client}
 	client.Project = &ProjectClient{client: client}
 	client.Version = &VersionClient{client: client}
 
@@ -228,7 +234,7 @@ func (c *Client) doRequest(request *APIRequest) ([]byte, http.Response, error) {
 	}
 
 	if res.Body == nil {
-		return nil, *res, fmt.Errorf("response body is nil in %s request to %s", request.Method, request.Endpoint)
+		return nil, *res, fmt.Errorf("response body is nil in %s request to %s", req.Method, req.URL)
 	}
 
 	body, err := io.ReadAll(res.Body)
@@ -269,11 +275,14 @@ func checkResponseStatus(body []byte, responseCode int, okCodes []int) (APIError
 // This sets common headers and prepares an optional payload for the request.
 func (c *Client) prepareRequest(request *APIRequest) (*http.Request, error) {
 	// Prepare the request.
-	req, reqErr := http.NewRequest(request.Method, c.APIURL+request.Endpoint, nil)
+	if request.URL == "" {
+		request.URL = c.APIURL + request.Endpoint
+	}
+	req, reqErr := http.NewRequest(request.Method, request.URL, nil)
 
 	if request.Payload != nil {
 		data := bytes.NewBuffer(request.Payload)
-		req, reqErr = http.NewRequest(request.Method, c.APIURL+request.Endpoint, data)
+		req, reqErr = http.NewRequest(request.Method, request.URL, data)
 	}
 
 	if reqErr != nil {
@@ -328,6 +337,10 @@ func (c *Client) paginatedRequest(apiRequest *APIRequest, page int) (*APIRespons
 	// Add pagination parameters to endpoint
 	baseEndpoint := apiRequest.Endpoint
 	apiRequest.Endpoint = fmt.Sprintf("%s?perPage=%d&page=%d", baseEndpoint, perPage, page)
+
+	if apiRequest.URL == "" {
+		apiRequest.URL = c.APIURL + apiRequest.Endpoint
+	}
 
 	// Make API request
 	apiResponse, err := c.APIRequest(apiRequest)
