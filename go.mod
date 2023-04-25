@@ -9,7 +9,7 @@ require (
 	github.com/segmentio/golines v0.11.0
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/vuln v0.1.0
-	mvdan.cc/gofumpt v0.4.0
+	mvdan.cc/gofumpt v0.5.0
 )
 
 // Compatible replacements for outdated/vulnerable packages.
