@@ -1,11 +1,13 @@
 # Go Client for the ReadMe.com API
 
 [![Version](https://img.shields.io/github/v/release/liveoaklabs/readme-api-go-client)](https://github.com/liveoaklabs/readme-api-go-client/releases)
-[![CodeQL](https://github.com/liveoaklabs/readme-api-go-client/workflows/CodeQL/badge.svg)](https://github.com/liveoaklabs/readme-api-go-client/actions?query=workflow%3ACodeQL)
-[![Tests](https://github.com/liveoaklabs/readme-api-go-client/actions/workflows/tests.yml/badge.svg)](https://github.com/liveoaklabs/readme-api-go-client/actions/workflows/tests.yml)
 [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://pkg.go.dev/github.com/liveoaklabs/readme-api-go-client?tab=doc)
 
 This is a Go client library for the [ReadMe.com](https://readme.com) API.
+
+![Live Oak Bank](.github/readme/lob-logo.png)
+
+This package is developed by [Live Oak Bank](https://liveoakbank.com) and is not affiliated with ReadMe.com.
 
 ## Getting Started
 
