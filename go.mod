@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/boumenot/gocover-cobertura v1.2.0
 	github.com/golangci/golangci-lint v1.53.3
-	github.com/princjef/gomarkdoc v1.0.0
+	github.com/princjef/gomarkdoc v1.1.0
 	github.com/segmentio/golines v0.11.0
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/vuln v0.1.0

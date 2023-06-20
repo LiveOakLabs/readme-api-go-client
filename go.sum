@@ -484,8 +484,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/polyfloyd/go-errorlint v1.4.2 h1:CU+O4181IxFDdPH6t/HT7IiDj1I7zxNi1RIUxYwn8d0=
 github.com/polyfloyd/go-errorlint v1.4.2/go.mod h1:k6fU/+fQe38ednoZS51T7gSIGQW1y94d6TkSr35OzH8=
-github.com/princjef/gomarkdoc v1.0.0 h1:RuqWaHl7meVwMT+7wlZL2qUFqKxEDDze34vNrNUhgWc=
-github.com/princjef/gomarkdoc v1.0.0/go.mod h1:HI3w0Zv8H03ecak/IqVAcPFTuPt7sn7Top6xbgCs1Qk=
+github.com/princjef/gomarkdoc v1.1.0 h1:xtl7mESKQWVuGiFdd1AO3dFA6OenWG86bZu97IqBNPE=
+github.com/princjef/gomarkdoc v1.1.0/go.mod h1:HI3w0Zv8H03ecak/IqVAcPFTuPt7sn7Top6xbgCs1Qk=
 github.com/princjef/mageutil v1.0.0 h1:1OfZcJUMsooPqieOz2ooLjI+uHUo618pdaJsbCXcFjQ=
 github.com/princjef/mageutil v1.0.0/go.mod h1:mkShhaUomCYfAoVvTKRcbAs8YSVPdtezI5j6K+VXhrs=
 github.com/princjef/termdiff v0.1.0 h1:O3PWhfPFzX6GqzQ+41B3XzzJpMlx0+9Vysm+Pv76C9U=
