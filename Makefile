@@ -47,7 +47,7 @@ coverage: test ## Generate a code test coverage report using 'gocover-cobertura'
 .PHONY: check-vuln
 check-vuln: ## Check for vulnerabilities using 'govulncheck'
 	@echo "Checking for vulnerabilities..."
-	@go run golang.org/x/vuln/cmd/govulncheck -v ./...
+	@go run golang.org/x/vuln/cmd/govulncheck ./...
 
 .PHONY: clean
 clean: ## Clean test files
