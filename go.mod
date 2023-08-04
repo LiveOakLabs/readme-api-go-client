@@ -8,7 +8,7 @@ require (
 	github.com/princjef/gomarkdoc v1.1.0
 	github.com/segmentio/golines v0.11.0
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/vuln v0.2.0
+	golang.org/x/vuln v1.0.0
 	mvdan.cc/gofumpt v0.5.0
 )
 

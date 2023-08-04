@@ -14,7 +14,11 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.20.x'
+          go-version-file: 'go.mod'
+          check-latest: true # Ensure the cache isn't stale.
+
+      - name: check-vuln
+        run: make check-vuln
 
       - name: gosec
         uses: securego/gosec@v2.16.0
@@ -22,9 +26,6 @@ jobs:
           GO111MODULE: on
         with:
           args: ./...
-
-      - name: check-vuln
-        run: make check-vuln
 
   lint:
     runs-on: ubuntu-latest
@@ -34,7 +35,8 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.20.x'
+          go-version-file: 'go.mod'
+          check-latest: true # Ensure the cache isn't stale.
 
       - name: Lint
         run: make lint
@@ -47,7 +49,8 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.20.x'
+          go-version-file: 'go.mod'
+          check-latest: true # Ensure the cache isn't stale.
 
       - name: Test
         run: make coverage
