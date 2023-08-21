@@ -8,7 +8,7 @@ require (
 	github.com/princjef/gomarkdoc v1.1.0
 	github.com/segmentio/golines v0.11.0
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/vuln v1.0.0
+	golang.org/x/vuln v1.0.1
 	mvdan.cc/gofumpt v0.5.0
 )
 
@@ -231,7 +231,7 @@ require (
 	golang.org/x/sys v0.11.0 // indirect
 	golang.org/x/term v0.11.0 // indirect
 	golang.org/x/text v0.12.0 // indirect
-	golang.org/x/tools v0.12.0 // indirect
+	golang.org/x/tools v0.12.1-0.20230815132531-74c255bcf846 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
