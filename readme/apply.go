@@ -80,7 +80,7 @@ type ApplyResponse struct {
 // Get a list of open roles at ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/getopenroles
-func (c *ApplyClient) Get() ([]OpenRole, *APIResponse, error) {
+func (c ApplyClient) Get() ([]OpenRole, *APIResponse, error) {
 	response := []OpenRole{}
 	apiResponse, err := c.client.APIRequest(&APIRequest{
 		Method:       "GET",
@@ -96,7 +96,7 @@ func (c *ApplyClient) Get() ([]OpenRole, *APIResponse, error) {
 // Apply for an open role at ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/applytoreadme
-func (c *ApplyClient) Apply(application Application) (ApplyResponse, *APIResponse, error) {
+func (c ApplyClient) Apply(application Application) (ApplyResponse, *APIResponse, error) {
 	payload, err := json.Marshal(application)
 	if err != nil {
 		return ApplyResponse{}, &APIResponse{}, fmt.Errorf("unable to parse application: %w", err)

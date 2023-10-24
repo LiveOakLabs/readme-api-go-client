@@ -290,7 +290,7 @@ type DocSearchResultSnippetValue struct {
 // API References:
 //   - https://docs.readme.com/main/reference/getdoc
 //   - https://docs.readme.com/main/reference/getproductiondoc
-func (c *DocClient) Get(doc string, options ...RequestOptions) (Doc, *APIResponse, error) {
+func (c DocClient) Get(doc string, options ...RequestOptions) (Doc, *APIResponse, error) {
 	response := Doc{}
 
 	opts := RequestOptions{}
@@ -298,7 +298,7 @@ func (c *DocClient) Get(doc string, options ...RequestOptions) (Doc, *APIRespons
 		opts = options[0]
 	}
 
-	isID, paramID := parseID(doc)
+	isID, paramID := ParseID(doc)
 	if isID {
 		// Reset the doc query. A matching search result will set this to its slug.
 		doc = ""
@@ -346,7 +346,7 @@ func (c *DocClient) Get(doc string, options ...RequestOptions) (Doc, *APIRespons
 // Create a new doc in ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/createdoc
-func (c *DocClient) Create(params DocParams, options ...RequestOptions) (Doc, *APIResponse, error) {
+func (c DocClient) Create(params DocParams, options ...RequestOptions) (Doc, *APIResponse, error) {
 	if params.Title == "" {
 		return Doc{}, nil, fmt.Errorf("doc title is required")
 	}
@@ -383,7 +383,7 @@ func (c *DocClient) Create(params DocParams, options ...RequestOptions) (Doc, *A
 // Update an existing doc in ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/updatedoc
-func (c *DocClient) Update(slug string, params DocParams, options ...RequestOptions) (Doc, *APIResponse, error) {
+func (c DocClient) Update(slug string, params DocParams, options ...RequestOptions) (Doc, *APIResponse, error) {
 	if params.Title == "" {
 		return Doc{}, nil, fmt.Errorf("doc title is required")
 	}
@@ -420,7 +420,7 @@ func (c *DocClient) Update(slug string, params DocParams, options ...RequestOpti
 // Delete a doc in ReadMe.
 //
 // API Reference: https://docs.readme.com/reference/deletedoc
-func (c *DocClient) Delete(slug string, options ...RequestOptions) (bool, *APIResponse, error) {
+func (c DocClient) Delete(slug string, options ...RequestOptions) (bool, *APIResponse, error) {
 	apiRequest := &APIRequest{
 		Method:       "DELETE",
 		Endpoint:     fmt.Sprintf("%s/%s", DocEndpoint, slug),
@@ -443,7 +443,7 @@ func (c *DocClient) Delete(slug string, options ...RequestOptions) (bool, *APIRe
 // Search for docs that match the search query parameter.
 //
 // API Reference: https://docs.readme.com/main/reference/searchdocs
-func (c *DocClient) Search(query string, options ...RequestOptions) ([]DocSearchResult, *APIResponse, error) {
+func (c DocClient) Search(query string, options ...RequestOptions) ([]DocSearchResult, *APIResponse, error) {
 	results := DocSearchResults{}
 	apiRequest := &APIRequest{
 		Method:       "POST",

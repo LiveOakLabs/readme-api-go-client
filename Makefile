@@ -34,13 +34,18 @@ lint: gofumpt vet lines golangci-lint ## Run all linters
 ## Testing ##
 .PHONY: test
 test: ## Run unit and race tests with 'go test'
-	@go test -count=1 -parallel=4 -coverprofile=coverage.txt -covermode count -coverpkg=./readme/... ./readme/...
+	@go test -count=1 -coverprofile=coverage.txt -covermode count ./readme/...
 	@go test -race -short ./readme/...
 
 ## Coverage ##
 .PHONY: coverage
 coverage: test ## Generate a code test coverage report using 'gocover-cobertura'
 	@go run github.com/boumenot/gocover-cobertura < coverage.txt > coverage.xml
+	@rm -f coverage.txt
+
+.PHONY: coverage-html
+coverage-html: test ## Generate an HTML test coverage report
+	@go tool cover -html=coverage.txt -o coverage.html
 	@rm -f coverage.txt
 
 ## Vulnerability checks ##
@@ -52,3 +57,8 @@ check-vuln: ## Check for vulnerabilities using 'govulncheck'
 .PHONY: clean
 clean: ## Clean test files
 	@rm -f coverage.txt coverage.xml coverage.html checkstyle-report.xml
+
+.PHONY: mocks
+mocks: ## Generate mocks
+	# @mockery --all --keeptree --output ./mocks --outpkg mocks --case underscore
+	@mockery --all

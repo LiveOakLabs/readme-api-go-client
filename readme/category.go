@@ -185,7 +185,7 @@ func validCategoryType(categoryType string) bool {
 // GetAll retrieves and returns all categories on ReadMe.com.
 //
 // API Reference: https://docs.readme.com/reference/getcategories
-func (c *CategoryClient) GetAll(options ...RequestOptions) ([]Category, *APIResponse, error) {
+func (c CategoryClient) GetAll(options ...RequestOptions) ([]Category, *APIResponse, error) {
 	var err error
 	var categories []Category
 	var apiResponse *APIResponse
@@ -236,7 +236,7 @@ func (c *CategoryClient) GetAll(options ...RequestOptions) ([]Category, *APIResp
 // iterating over the list of all categories for a matching ID.
 //
 // API Reference: https://docs.readme.com/reference/getcategory
-func (c *CategoryClient) Get(category string, options ...RequestOptions) (Category, *APIResponse, error) {
+func (c CategoryClient) Get(category string, options ...RequestOptions) (Category, *APIResponse, error) {
 	categoryResponse := Category{}
 
 	opts := RequestOptions{}
@@ -244,7 +244,7 @@ func (c *CategoryClient) Get(category string, options ...RequestOptions) (Catego
 		opts = options[0]
 	}
 
-	isID, paramID := parseID(category)
+	isID, paramID := ParseID(category)
 	if isID {
 		category = ""
 
@@ -283,7 +283,7 @@ func (c *CategoryClient) Get(category string, options ...RequestOptions) (Catego
 // GetDocs a list of docs metadata for a category on ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/getcategorydocs
-func (c *CategoryClient) GetDocs(slug string, options ...RequestOptions) ([]CategoryDocs, *APIResponse, error) {
+func (c CategoryClient) GetDocs(slug string, options ...RequestOptions) ([]CategoryDocs, *APIResponse, error) {
 	var response []CategoryDocs
 
 	apiRequest := &APIRequest{
@@ -306,7 +306,7 @@ func (c *CategoryClient) GetDocs(slug string, options ...RequestOptions) ([]Cate
 // Create a new category in ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/createcategory
-func (c *CategoryClient) Create(
+func (c CategoryClient) Create(
 	response any,
 	params CategoryParams,
 	options ...RequestOptions,
@@ -342,7 +342,7 @@ func (c *CategoryClient) Create(
 // Update an existing category in ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/updatecategory
-func (c *CategoryClient) Update(
+func (c CategoryClient) Update(
 	slug string,
 	params CategoryParams,
 	options ...RequestOptions,
@@ -379,7 +379,7 @@ func (c *CategoryClient) Update(
 // Delete an existing category in ReadMe.
 //
 // API Reference: https://docs.readme.com/reference/deletecategory
-func (c *CategoryClient) Delete(slug string, options ...RequestOptions) (bool, *APIResponse, error) {
+func (c CategoryClient) Delete(slug string, options ...RequestOptions) (bool, *APIResponse, error) {
 	apiRequest := &APIRequest{
 		Method:       "DELETE",
 		Endpoint:     fmt.Sprintf("%s/%s", CategoryEndpoint, slug),

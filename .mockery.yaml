@@ -1,0 +1,9 @@
+quiet: False
+disable-version-string: True
+with-expecter: True
+outpkg: mocks
+dir: tests/mocks
+packages:
+  github.com/liveoaklabs/readme-api-go-client/readme:
+    config:
+      all: true

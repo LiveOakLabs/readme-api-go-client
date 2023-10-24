@@ -345,7 +345,7 @@ func (c *Client) paginatedRequest(apiRequest *APIRequest, page int) (*APIRespons
 	}
 
 	// Check for next page
-	hasNextPage, err := hasNextPage(apiResponse.HTTPResponse.Header.Get(PaginationHeader))
+	hasNextPage, err := HasNextPage(apiResponse.HTTPResponse.Header.Get(PaginationHeader))
 	if err != nil {
 		return apiResponse, false, fmt.Errorf(
 			"unable to check pagination link header '%s': %w; ",
@@ -377,7 +377,7 @@ func (c *Client) paginatedRequest(apiRequest *APIRequest, page int) (*APIRespons
 	return apiResponse, true, nil
 }
 
-// hasNextPage checks if a "next" link is provided in the "links" response header for pagination,
+// HasNextPage checks if a "next" link is provided in the "links" response header for pagination,
 // indicating the request has a next page.
 //
 // This does a rudimentary parsing of the header value, splitting on the comma-separated links and
@@ -385,7 +385,7 @@ func (c *Client) paginatedRequest(apiRequest *APIRequest, page int) (*APIRespons
 //
 // A link header looks like:
 // </api-specification?page=2>; rel="next", <>; rel="prev", <>; rel="last"
-func hasNextPage(links string) (bool, error) {
+func HasNextPage(links string) (bool, error) {
 	// Split links by comma
 	parts := strings.Split(links, ",")
 
@@ -411,9 +411,9 @@ func hasNextPage(links string) (bool, error) {
 	return false, nil
 }
 
-// validateID is a helper script for parseID() and parseUUID() that checks a string to determine if
+// ValidateID is a helper script for parseID() and parseUUID() that checks a string to determine if
 // it appears to be a valid ReadMe API object ID or Registry UUID.
-func validateID(id, prefix string, min_len, max_len int) (bool, string) {
+func ValidateID(id, prefix string, min_len, max_len int) (bool, string) {
 	if !strings.HasPrefix(id, prefix+":") {
 		return false, ""
 	}
@@ -427,20 +427,20 @@ func validateID(id, prefix string, min_len, max_len int) (bool, string) {
 	return IDValidCharacters.MatchString(parts[1]), parts[1]
 }
 
-// parseUUID checks a string to determine if it appears to be a valid ReadMe API Registry UUID.
+// ParseUUID checks a string to determine if it appears to be a valid ReadMe API Registry UUID.
 //
 // The provided parameter should be a ReadMe API Registry UUID prefixed with "uuid:".
 //
 // NOTE: The min and max lengths aren't certain or documented in the API. The UUID length varies.
-func parseUUID(uuid string) (bool, string) {
-	return validateID(uuid, "uuid", 10, 24)
+func ParseUUID(uuid string) (bool, string) {
+	return ValidateID(uuid, "uuid", 10, 24)
 }
 
-// parseID checks a string to determine if it appears to be a valid ReadMe API object ID.
+// ParseID checks a string to determine if it appears to be a valid ReadMe API object ID.
 //
 // The provided parameter should be a ReadMe API object ID prefixed with "id:".
 //
 // NOTE: The min and max lengths aren't certain or documented in the API.
-func parseID(id string) (bool, string) {
-	return validateID(id, "id", 20, 24)
+func ParseID(id string) (bool, string) {
+	return ValidateID(id, "id", 20, 24)
 }

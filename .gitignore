@@ -1,4 +1,5 @@
 checkstyle-report.xml
 coverage.xml
+coverage.html
 coverage.txt
 .DS_Store

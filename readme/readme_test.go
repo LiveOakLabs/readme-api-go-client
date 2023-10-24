@@ -2,18 +2,16 @@ package readme_test
 
 import (
 	"fmt"
-	"net/http"
 	"testing"
 
 	"github.com/liveoaklabs/readme-api-go-client/readme"
 	"github.com/stretchr/testify/assert"
 )
 
-// mockPaginatedRequestHeader represents common and valid HTTP headers for paginated requests.
-var mockPaginatedRequestHeader = http.Header{
-	"Link":          {`<>; rel="next", <>; rel="prev", <>; rel="last"`},
-	"X-Total-Count": {"20"},
-}
+// Test Client
+const TestClientBaseURL = "http://readme-test.local/api/v1"
+
+var TestClient, TestClientErr = readme.NewClient("test", TestClientBaseURL)
 
 // TestNewClient tests the package's main setup function.
 func Test_NewClient(t *testing.T) {
@@ -28,14 +26,11 @@ func Test_NewClient(t *testing.T) {
 	})
 
 	t.Run("when a custom API URL is specified", func(t *testing.T) {
-		// Act
-		client, err := readme.NewClient("atoken", "http://readme-test.local/v2")
-
 		// Assert
-		assert.NoError(t, err, "returns no errors when single custom API URL is provided")
-		assert.Equal(t, client.APIURL, "http://readme-test.local/v2",
+		assert.NoError(t, TestClientErr, "returns no errors when single custom API URL is provided")
+		assert.Equal(t, TestClientBaseURL, TestClient.APIURL,
 			"returns expected client configured API URL when custom API URL is provided")
-		assert.Equal(t, client.Token, "atoken")
+		assert.Equal(t, "test", TestClient.Token)
 	})
 
 	t.Run("when too many parameters are specified", func(t *testing.T) {
