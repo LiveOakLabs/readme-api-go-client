@@ -321,7 +321,6 @@ func (c *Client) prepareRequest(request *APIRequest) (*http.Request, error) {
 func (c *Client) paginatedRequest(apiRequest *APIRequest, page int) (*APIResponse, bool, error) {
 	// Set default values
 	perPage := 100
-	apiRequest.Version = ""
 
 	// Check for custom values in RequestOptions
 	if apiRequest.RequestOptions.PerPage != 0 {
@@ -329,9 +328,6 @@ func (c *Client) paginatedRequest(apiRequest *APIRequest, page int) (*APIRespons
 	}
 	if apiRequest.RequestOptions.Headers != nil {
 		apiRequest.Headers = apiRequest.RequestOptions.Headers
-	}
-	if apiRequest.RequestOptions.Version != "" {
-		apiRequest.Version = apiRequest.RequestOptions.Version
 	}
 
 	// Add pagination parameters to endpoint
