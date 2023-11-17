@@ -10,7 +10,7 @@ import (
 )
 
 func Test_Docs_Get(t *testing.T) {
-	t.Run("happy path", func(t *testing.T) {
+	t.Run("get by slug", func(t *testing.T) {
 		// Arrange
 		expect := testdata.Docs[0]
 		gock.New(TestClient.APIURL).
@@ -21,6 +21,28 @@ func Test_Docs_Get(t *testing.T) {
 
 		// Act
 		got, _, err := TestClient.Doc.Get(expect.Slug)
+
+		// Assert
+		assert.Equal(t, expect, got, "it returns expected Doc struct")
+		assert.NoError(t, err, "it does not return an error")
+		assert.True(t, gock.IsDone(), "it makes the expected API call")
+	})
+
+	t.Run("get by id", func(t *testing.T) {
+		// Arrange
+		expect := testdata.Docs[0]
+		gock.New(TestClient.APIURL).
+			Post(readme.DocEndpoint + "/search").
+			Reply(200).
+			JSON(testdata.DocSearchResults)
+		gock.New(TestClient.APIURL).
+			Get(readme.DocEndpoint + "/" + expect.Slug).
+			Reply(200).
+			JSON(expect)
+		defer gock.Off()
+
+		// Act
+		got, _, err := TestClient.Doc.Get("id:" + expect.ID)
 
 		// Assert
 		assert.Equal(t, expect, got, "it returns expected Doc struct")

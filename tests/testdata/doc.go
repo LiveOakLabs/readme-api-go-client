@@ -80,7 +80,7 @@ var Docs = []readme.Doc{
 		Order:         999,
 		IsReference:   false,
 		Deprecated:    false,
-		Hidden:        true,
+		Hidden:        false,
 		SyncUnique:    "",
 		LinkURL:       "",
 		LinkExternal:  false,
@@ -153,6 +153,7 @@ var Docs = []readme.Doc{
 
 var DocSearchResult = []readme.DocSearchResult{
 	{
+		ObjectID: Docs[0].ID,
 		HighlightResult: readme.DocSearchResultHighlight{
 			Body: readme.DocSearchResultHighlightValue{
 				Value:      Docs[0].Body,
@@ -169,9 +170,10 @@ var DocSearchResult = []readme.DocSearchResult{
 				},
 			},
 		},
-		Slug:    Docs[0].Slug,
-		Title:   Docs[0].Title,
-		Version: Docs[0].Version,
+		Slug:        Docs[0].Slug,
+		Title:       Docs[0].Title,
+		Version:     Docs[0].Version,
+		ReferenceID: Docs[0].ID,
 	},
 }
 
