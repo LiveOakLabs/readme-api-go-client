@@ -10,7 +10,7 @@ require (
 	github.com/princjef/gomarkdoc v1.1.0
 	github.com/segmentio/golines v0.11.0
 	github.com/stretchr/testify v1.8.4
-	github.com/vektra/mockery/v2 v2.37.1
+	github.com/vektra/mockery/v2 v2.38.0
 	github.com/wadey/gocovmerge v0.0.0-20160331181800-b5bfa59ec0ad
 	golang.org/x/vuln v1.0.1
 	mvdan.cc/gofumpt v0.5.0
