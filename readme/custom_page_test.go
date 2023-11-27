@@ -1,206 +1,175 @@
 package readme_test
 
 import (
-	"net/http"
 	"testing"
 
-	"github.com/liveoaklabs/readme-api-go-client/internal/testutil"
+	"github.com/h2non/gock"
 	"github.com/liveoaklabs/readme-api-go-client/readme"
+	"github.com/liveoaklabs/readme-api-go-client/tests/testdata"
 	"github.com/stretchr/testify/assert"
 )
-
-const customPagesEndpoint = "http://readme-test.local/api/v1/custompages"
-
-// mockCustomPageBody represents the raw JSON response body for a custom page from the ReadMe.com API.
-var mockCustomPageBody string = `
-	{
-		"metadata": {
-		"image": [],
-		"title": "",
-		"description": ""
-		},
-		"title": "Some Test Page",
-		"slug": "some-test-page",
-		"body": "# A test page.",
-		"html": "",
-		"htmlmode": false,
-		"fullscreen": false,
-		"hidden": true,
-		"pendingAlgoliaPublish": false,
-		"revision": 2,
-		"_id": "63ae563ec4d05f018b26cf18",
-		"createdAt": "2022-12-30T03:08:46.695Z",
-		"updatedAt": "2022-12-30T03:09:46.695Z",
-		"__v": 0
-	}
-	`
 
 func Test_CustomPages_GetAll(t *testing.T) {
 	t.Run("when called with valid parameters and API responds with 200", func(t *testing.T) {
 		// Arrange
-		var expect []readme.CustomPage
+		expect := testdata.CustomPages
+		gock.New(TestClient.APIURL).
+			Get(readme.CustomPageEndpoint).
+			Reply(200).
+			AddHeader("Link", `</custompages?page=2>; rel="next", <>; rel="prev", <>; rel="last"`).
+			AddHeader("x-total-count", "3").
+			JSON(expect)
+		defer gock.Off()
 
-		mockRequestHeader := http.Header{
-			"Link":          []string{`<>; rel="next", <>; rel="prev", <>; rel="last"`},
-			"X-Total-Count": []string{"1"},
-		}
-		mockResponse := testutil.APITestResponse{
-			URL:     customPagesEndpoint + "?perPage=100&page=1",
-			Status:  200,
-			Body:    "[" + mockCustomPageBody + "]",
-			Headers: mockRequestHeader,
-		}
-		testutil.JsonToStruct(t, mockResponse.Body, &expect)
-		api := mockResponse.New(t)
+		reqOpts := readme.RequestOptions{PerPage: 100, Page: 1}
 
 		// Act
-		got, _, err := api.CustomPage.GetAll(readme.RequestOptions{PerPage: 100, Page: 1})
+		got, _, err := TestClient.CustomPage.GetAll(reqOpts)
 
 		// Assert
 		assert.NoError(t, err, "it does not return an error")
 		assert.Equal(t, expect, got, "it returns expected []CustomPage struct")
+		assert.True(t, gock.IsDone(), "it makes the expected API call")
 	})
 
 	t.Run("when response pagination header is invalid", func(t *testing.T) {
-		var expect []readme.CustomPage
-
 		t.Run("when page >= (totalCount / perPage)", func(t *testing.T) {
 			// Arrange
-			mockResponse := testutil.APITestResponse{
-				URL:    "",
-				Status: 200,
-				Body:   `[]`,
-				Headers: http.Header{
-					"Link":          []string{`</custompages?page=16>; rel="next", <>; rel="prev", <>; rel="last"`},
-					"X-Total-Count": []string{"90"},
-				},
-			}
-			api := mockResponse.New(t)
+			expect := testdata.CustomPages
+			gock.New(TestClient.APIURL).
+				Get(readme.CustomPageEndpoint).
+				MatchParam("page", "16").
+				MatchParam("perPage", "6").
+				Reply(200).
+				AddHeader("Link", `</custompages?perPage=6&page=15>; rel="next", <>; rel="prev", <>; rel="last"`).
+				AddHeader("x-total-count", "90").
+				JSON(expect)
+			defer gock.Off()
+
+			reqOpts := readme.RequestOptions{PerPage: 6, Page: 16}
 
 			// Act
-			got, apiResponse, err := api.CustomPage.GetAll(readme.RequestOptions{PerPage: 6, Page: 14})
+			got, apiResponse, err := TestClient.CustomPage.GetAll(reqOpts)
 
 			// Assert
 			assert.NoError(t, err, "it does not return an error")
-			assert.Equal(t, "/custompages?perPage=6&page=15", apiResponse.Request.Endpoint,
+			assert.Equal(t, "/custompages?perPage=6&page=16",
+				apiResponse.Request.Endpoint,
 				"it requests with the expected pagination query parameters")
 			assert.Equal(t, expect, got, "it returns expected []CustomPage")
+			assert.True(t, gock.IsDone(), "it makes the expected API call")
 		})
 
 		t.Run("when pagination x-total-count header is invalid", func(t *testing.T) {
 			// Arrange
-			mockResponse := testutil.APITestResponse{
-				URL:    "",
-				Status: 200,
-				Body:   `[]`,
-				Headers: http.Header{
-					"Link":          []string{`</custompages?page=2>; rel="next", <>; rel="prev", <>; rel="last"`},
-					"X-Total-Count": []string{"x"},
-				},
-			}
-			api := mockResponse.New(t)
+			var expect []readme.CustomPage
+			gock.New(TestClient.APIURL).
+				Get(readme.CustomPageEndpoint).
+				MatchParam("page", "15").
+				MatchParam("perPage", "6").
+				Reply(200).
+				AddHeader("Link", `</custompages?perPage=6&page=15>; rel="next", <>; rel="prev", <>; rel="last"`).
+				AddHeader("x-total-count", "x").
+				JSON(expect)
+			defer gock.Off()
+
+			reqOpts := readme.RequestOptions{PerPage: 6, Page: 15}
 
 			// Act
-			got, _, err := api.CustomPage.GetAll(readme.RequestOptions{PerPage: 6, Page: 15})
+			got, _, err := TestClient.CustomPage.GetAll(reqOpts)
 
 			// Assert
 			assert.Error(t, err, "it returns an error")
-			assert.ErrorContains(t, err, "unable to parse 'x-total-count' header:", "it returns the expected error")
+			assert.ErrorContains(t, err, "unable to parse 'x-total-count' header:",
+				"it returns the expected error")
 			assert.Equal(t, expect, got, "it returns nil []CustomPage")
+			assert.True(t, gock.IsDone(), "it makes the expected API call")
 		})
 	})
 }
 
 func Test_CustomPages_Get(t *testing.T) {
 	// Arrange
-	expect := readme.CustomPage{}
-
-	mockResponse := testutil.APITestResponse{
-		URL:    customPagesEndpoint + "/some-test-page",
-		Status: 200,
-		Body:   mockCustomPageBody,
-	}
-	testutil.JsonToStruct(t, mockResponse.Body, &expect)
-	api := mockResponse.New(t)
+	expect := testdata.CustomPages[0]
+	gock.New(TestClient.APIURL).
+		Get(readme.CustomPageEndpoint + "/" + expect.Slug).
+		Reply(200).
+		JSON(expect)
+	defer gock.Off()
 
 	// Act
-	got, _, err := api.CustomPage.Get("some-test-page")
+	got, _, err := TestClient.CustomPage.Get(expect.Slug)
 
 	// Assert
 	assert.NoError(t, err, "it does not return an error")
 	assert.Equal(t, expect, got, "it returns expected []CustomPage struct")
+	assert.True(t, gock.IsDone(), "it makes the expected API call")
 }
 
 func Test_CustomPages_Create(t *testing.T) {
 	// Arrange
-	expect := readme.CustomPage{}
+	expect := testdata.CustomPages[0]
+	gock.New(TestClient.APIURL).
+		Post(readme.CustomPageEndpoint).
+		Reply(201).
+		JSON(expect)
+	defer gock.Off()
 
-	mockResponse := testutil.APITestResponse{
-		URL:    customPagesEndpoint,
-		Status: 201,
-		Body:   mockCustomPageBody,
+	createParams := readme.CustomPageParams{
+		Body:     expect.Body,
+		Title:    expect.Title,
+		HTML:     expect.HTML,
+		Hidden:   &expect.Hidden,
+		HTMLMode: &expect.HTMLMode,
 	}
-	testutil.JsonToStruct(t, mockResponse.Body, &expect)
-	api := mockResponse.New(t)
 
 	// Act
-	hidden := true
-	htmlMode := false
-	testCreate := readme.CustomPageParams{
-		Body:     "this is a test",
-		Title:    "Test Page",
-		HTML:     "&nbsp;",
-		Hidden:   &hidden,
-		HTMLMode: &htmlMode,
-	}
-	got, _, err := api.CustomPage.Create(testCreate)
+	got, _, err := TestClient.CustomPage.Create(createParams)
 
 	// Assert
 	assert.NoError(t, err, "it does not return an error")
 	assert.Equal(t, expect, got, "it returns expected CustomPage struct")
+	assert.True(t, gock.IsDone(), "it makes the expected API call")
 }
 
 func Test_CustomPages_Update(t *testing.T) {
 	// Arrange
-	expect := readme.CustomPage{}
+	expect := testdata.CustomPages[0]
 
-	mockResponse := testutil.APITestResponse{
-		URL:    customPagesEndpoint + "/foo",
-		Status: 200,
-		Body:   mockCustomPageBody,
+	gock.New(TestClient.APIURL).
+		Put(readme.CustomPageEndpoint + "/" + expect.Slug).
+		Reply(200).
+		JSON(expect)
+	defer gock.Off()
+
+	updateParams := readme.CustomPageParams{
+		Body:     expect.Body,
+		Title:    expect.Title,
+		HTML:     expect.HTML,
+		Hidden:   &expect.Hidden,
+		HTMLMode: &expect.HTMLMode,
 	}
-	testutil.JsonToStruct(t, mockResponse.Body, &expect)
-	api := mockResponse.New(t)
 
 	// Act
-	hidden := true
-	htmlMode := false
-	testCreate := readme.CustomPageParams{
-		Body:     "this is a test",
-		Title:    "Test Page",
-		HTML:     "&nbsp;",
-		Hidden:   &hidden,
-		HTMLMode: &htmlMode,
-	}
-	got, _, err := api.CustomPage.Update("foo", testCreate)
+	got, _, err := TestClient.CustomPage.Update(expect.Slug, updateParams)
 
 	// Assert
 	assert.NoError(t, err, "it does not return an error")
 	assert.Equal(t, expect, got, "it returns expected CustomPage struct")
+	assert.True(t, gock.IsDone(), "it makes the expected API call")
 }
 
 func Test_CustomPages_Delete(t *testing.T) {
 	t.Run("when successful", func(t *testing.T) {
 		// Arrange
-		mockResponse := testutil.APITestResponse{
-			URL:    customPagesEndpoint + "/foo",
-			Status: 204,
-			Body:   "{}",
-		}
-		api := mockResponse.New(t)
+		gock.New(TestClient.APIURL).
+			Delete(readme.CustomPageEndpoint + "/foo").
+			Reply(204).
+			JSON("{}")
+		defer gock.Off()
 
 		// Act
-		got, _, err := api.CustomPage.Delete("foo")
+		got, _, err := TestClient.CustomPage.Delete("foo")
 
 		// Assert
 		assert.NoError(t, err, "it does not return an error")
@@ -209,19 +178,19 @@ func Test_CustomPages_Delete(t *testing.T) {
 
 	t.Run("when API responds with error", func(t *testing.T) {
 		// Arrange
-		mockResponse := testutil.APITestResponse{
-			URL:    customPagesEndpoint + "/foo",
-			Status: 400,
-			Body:   "{}",
-		}
-		api := mockResponse.New(t)
+		gock.New(TestClient.APIURL).
+			Delete(readme.CustomPageEndpoint + "/foo").
+			Reply(400).
+			JSON("{}")
+		defer gock.Off()
 
 		// Act
-		got, _, err := api.CustomPage.Delete("foo")
+		got, _, err := TestClient.CustomPage.Delete("foo")
 
 		// Assert
-		assert.Error(t, err, "it returns an error")
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 400", "it return the expected error")
+		assert.ErrorContains(t, err, "API responded with a non-OK status: 400",
+			"it return the expected error")
 		assert.False(t, got, "it returns false")
+		assert.True(t, gock.IsDone(), "it makes the expected API call")
 	})
 }

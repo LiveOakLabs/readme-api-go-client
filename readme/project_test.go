@@ -3,77 +3,66 @@ package readme_test
 import (
 	"testing"
 
-	"github.com/liveoaklabs/readme-api-go-client/internal/testutil"
+	"github.com/h2non/gock"
 	"github.com/liveoaklabs/readme-api-go-client/readme"
+	"github.com/liveoaklabs/readme-api-go-client/tests/testdata"
 	"github.com/stretchr/testify/assert"
 )
-
-const projectEndpoint = "http://readme-test.local/api/v1/"
 
 func Test_Project_Get(t *testing.T) {
 	t.Run("when API responds with 200", func(t *testing.T) {
 		// Arrange
-		expect := readme.Project{}
-		mockResponse := testutil.APITestResponse{
-			URL:    projectEndpoint,
-			Status: 200,
-			Body: `
-				{
-					"name": "Go Testing",
-					"subdomain": "foobar",
-					"jwtSecret": "123456789abcdef",
-					"baseUrl": "https://developer.example.com",
-					"plan": "enterprise"
-				}
-			`,
-		}
-		testutil.JsonToStruct(t, mockResponse.Body, &expect)
-		api := mockResponse.New(t)
+		expect := testdata.Project
+		gock.New(TestClient.APIURL).
+			Get("/").
+			Reply(200).
+			JSON(expect)
+		defer gock.Off()
 
 		// Act
-		got, _, err := api.Project.Get()
+		got, _, err := TestClient.Project.Get()
 
 		// Assert
 		assert.NoError(t, err, "it does not return an error")
 		assert.Equal(t, expect, got, "it returns expected Project struct")
+		assert.True(t, gock.IsDone(), "it makes the expected API call")
 	})
 
 	t.Run("when API responds with 401", func(t *testing.T) {
 		// Arrange
-		expect := readme.APIErrorResponse{}
-		expect.Error = "APIKEY_EMPTY"
-
-		mockResponse := testutil.APITestResponse{
-			URL:    projectEndpoint,
-			Status: 401,
-			Body:   `{"error":"APIKEY_EMPTY"}`,
-		}
-		testutil.JsonToStruct(t, mockResponse.Body, &expect)
-		api := mockResponse.New(t)
+		expect := readme.APIErrorResponse{Error: "APIKEY_EMPTY"}
+		gock.New(TestClient.APIURL).
+			Get("/").
+			Reply(401).
+			JSON(expect)
+		defer gock.Off()
 
 		// Act
-		_, got, err := api.Project.Get()
+		_, got, err := TestClient.Project.Get()
 
 		// Assert
-		assert.Error(t, err, "it does not return an error")
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 401", "it returns the expected error")
-		assert.Equal(t, expect, got.APIErrorResponse, "it returns the API error response")
+		assert.ErrorContains(t, err, "API responded with a non-OK status: 401",
+			"it returns the expected error")
+		assert.Equal(t, expect, got.APIErrorResponse,
+			"it returns the API error response")
+		assert.True(t, gock.IsDone(), "it makes the expected API call")
 	})
 
 	t.Run("when API response cannot be parsed", func(t *testing.T) {
 		// Arrange
-		mockResponse := testutil.APITestResponse{
-			URL:    projectEndpoint,
-			Status: 200,
-			Body:   `[{"invalid":invalid"}]`,
-		}
-		api := mockResponse.New(t)
+		gock.New(TestClient.APIURL).
+			Get("/").
+			Reply(200).
+			JSON(`[{"invalid":invalid"}]`)
+		defer gock.Off()
 
 		// Act
-		_, _, err := api.Project.Get()
+		_, _, err := TestClient.Project.Get()
 
 		// Assert
-		assert.Error(t, err, "it returns an error")
-		assert.ErrorContains(t, err, "unable to parse API response: invalid character", "it returns the expected error")
+		assert.ErrorContains(t, err,
+			"unable to parse API response: invalid character",
+			"it returns the expected error")
+		assert.True(t, gock.IsDone(), "it makes the expected API call")
 	})
 }

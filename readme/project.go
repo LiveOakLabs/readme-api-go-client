@@ -40,7 +40,7 @@ var _ ProjectService = &ProjectClient{}
 // Get retrieves project metadata from the ReadMe.com API.
 //
 // API Reference: https://docs.readme.com/main/reference/getproject
-func (c *ProjectClient) Get() (Project, *APIResponse, error) {
+func (c ProjectClient) Get() (Project, *APIResponse, error) {
 	project := Project{}
 	apiResponse, err := c.client.APIRequest(&APIRequest{
 		Method:       "GET",

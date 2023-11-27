@@ -6,6 +6,8 @@ import (
 	"io"
 	"mime/multipart"
 	"strings"
+
+	"github.com/charmbracelet/log"
 )
 
 // APISpecificationEndpoint is the ReadMe API Endpoint for API Specifications.
@@ -64,10 +66,10 @@ type APISpecificationService interface {
 	// API Reference: https://docs.readme.com/reference/updateapispecification
 	Update(specID, definition string) (APISpecificationSaved, *APIResponse, error)
 
-	// uploadDefinition uploads an API specification definition by making a request that submits
+	// UploadDefinition uploads an API specification definition by making a request that submits
 	// form data with the specification definition provided as a string.
 	// APISpecification.Create() should be used in most cases instead of calling this directly.
-	uploadDefinition(method, content, url, version string, response interface{}) (interface{}, *APIResponse, error)
+	UploadDefinition(method, content, url, version string, response interface{}) (interface{}, *APIResponse, error)
 }
 
 // APISpecificationClient handles communication with the API specification related methods of the
@@ -100,7 +102,7 @@ type APISpecificationSaved struct {
 // GetAll retrieves and returns all API specifications on ReadMe.com.
 //
 // API Reference: https://docs.readme.com/reference/getapispecification
-func (c *APISpecificationClient) GetAll(options ...RequestOptions) ([]APISpecification, *APIResponse, error) {
+func (c APISpecificationClient) GetAll(options ...RequestOptions) ([]APISpecification, *APIResponse, error) {
 	var specifications []APISpecification
 	var apiResponse *APIResponse
 	var err error
@@ -126,6 +128,7 @@ func (c *APISpecificationClient) GetAll(options ...RequestOptions) ([]APISpecifi
 		}
 		if len(options) > 0 {
 			apiRequest.RequestOptions = options[0]
+			log.Infof("GetAll version: %s", apiRequest.RequestOptions.Version)
 		}
 
 		apiResponse, hasNextPage, err = c.client.paginatedRequest(apiRequest, page)
@@ -140,6 +143,7 @@ func (c *APISpecificationClient) GetAll(options ...RequestOptions) ([]APISpecifi
 
 		page = page + 1
 	}
+	log.Infof("GetAll version in response: %s", apiResponse.Request.RequestOptions.Version)
 
 	return specifications, apiResponse, nil
 }
@@ -152,7 +156,7 @@ func (c *APISpecificationClient) GetAll(options ...RequestOptions) ([]APISpecifi
 // An error is returned if the specification wasn't found.
 //
 // See https://docs.readme.com/reference/getapispecification
-func (c *APISpecificationClient) Get(specID string, options ...RequestOptions) (APISpecification, *APIResponse, error) {
+func (c APISpecificationClient) Get(specID string, options ...RequestOptions) (APISpecification, *APIResponse, error) {
 	specifications, apiResponse, err := c.GetAll(options...)
 	if err != nil {
 		return APISpecification{}, apiResponse, fmt.Errorf("unable to retrieve API specifications")
@@ -178,7 +182,7 @@ func (c *APISpecificationClient) Get(specID string, options ...RequestOptions) (
 // NOTE: specifying the definition as a UUID is an *undocumented* feature of the API.
 //
 // See https://docs.readme.com/reference/uploadapispecification
-func (c *APISpecificationClient) Create(
+func (c APISpecificationClient) Create(
 	definition string,
 	options ...RequestOptions,
 ) (APISpecificationSaved, *APIResponse, error) {
@@ -207,7 +211,7 @@ func (c *APISpecificationClient) Create(
 // NOTE: specifying the definition as a UUID is an *undocumented* feature of the API.
 //
 // API Reference: https://docs.readme.com/reference/updateapispecification
-func (c *APISpecificationClient) Update(
+func (c APISpecificationClient) Update(
 	specID, definition string,
 ) (APISpecificationSaved, *APIResponse, error) {
 	updated, apiResponse, err := c.createOrUpdateSpec("PUT", definition, "", specID)
@@ -222,7 +226,7 @@ func (c *APISpecificationClient) Update(
 // It returns true if it successfully deletes an API Specification.
 //
 // API Reference: https://docs.readme.com/reference/deleteapispecification
-func (c *APISpecificationClient) Delete(specID string) (bool, *APIResponse, error) {
+func (c APISpecificationClient) Delete(specID string) (bool, *APIResponse, error) {
 	apiResponse, err := c.client.APIRequest(&APIRequest{
 		Method:       "DELETE",
 		Endpoint:     fmt.Sprintf("%s/%s", APISpecificationEndpoint, specID),
@@ -242,7 +246,7 @@ func (c *APISpecificationClient) Delete(specID string) (bool, *APIResponse, erro
 // "PUT" for updating existing ones.
 //
 // The `specID` parameter is required if updating.
-func (c *APISpecificationClient) createOrUpdateSpec(
+func (c APISpecificationClient) createOrUpdateSpec(
 	method, definition, version string,
 	specID ...string,
 ) (*APISpecificationSaved, *APIResponse, error) {
@@ -258,21 +262,21 @@ func (c *APISpecificationClient) createOrUpdateSpec(
 	}
 	response := &APISpecificationSaved{}
 
-	isUUID, uuid := parseUUID(definition)
+	isUUID, uuid := ParseUUID(definition)
 	if isUUID {
 		_, apiResponse, err = c.createOrUpdateWithUUID(method, url, uuid, version, response)
 	} else {
-		_, apiResponse, err = c.uploadDefinition(method, definition, url, version, response)
+		_, apiResponse, err = c.UploadDefinition(method, definition, url, version, response)
 	}
 
 	return response, apiResponse, err
 }
 
-// uploadDefinition uploads an API specification definition by making a request that submits form
+// UploadDefinition uploads an API specification definition by making a request that submits form
 // data with the specification definition provided as a string.
 //
 // APISpecification.Create() should be used in most cases instead of calling this directly.
-func (c *APISpecificationClient) uploadDefinition(
+func (c APISpecificationClient) UploadDefinition(
 	method, definition, url, version string,
 	response interface{},
 ) (interface{}, *APIResponse, error) {
@@ -315,7 +319,7 @@ func (c *APISpecificationClient) uploadDefinition(
 //
 // NOTE: creating an API specification definition using this method is an *undocumented* feature of
 // the API.
-func (c *APISpecificationClient) createOrUpdateWithUUID(
+func (c APISpecificationClient) createOrUpdateWithUUID(
 	method, url, uuid, version string,
 	response interface{},
 ) (interface{}, *APIResponse, error) {

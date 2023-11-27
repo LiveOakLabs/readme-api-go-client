@@ -85,7 +85,7 @@ type CustomPageParams struct {
 // Pagination options may be specified with the `options` parameter.
 //
 // API Reference: https://docs.readme.com/main/reference/getcustompages
-func (c *CustomPageClient) GetAll(options ...RequestOptions) ([]CustomPage, *APIResponse, error) {
+func (c CustomPageClient) GetAll(options ...RequestOptions) ([]CustomPage, *APIResponse, error) {
 	var customPages []CustomPage
 	var apiResponse *APIResponse
 	var err error
@@ -132,7 +132,7 @@ func (c *CustomPageClient) GetAll(options ...RequestOptions) ([]CustomPage, *API
 // Get a single custom page's data from ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/getcustompage
-func (c *CustomPageClient) Get(slug string) (CustomPage, *APIResponse, error) {
+func (c CustomPageClient) Get(slug string) (CustomPage, *APIResponse, error) {
 	customPage := CustomPage{}
 
 	apiResponse, err := c.client.APIRequest(&APIRequest{
@@ -149,7 +149,7 @@ func (c *CustomPageClient) Get(slug string) (CustomPage, *APIResponse, error) {
 // Create a new custom page in ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/createcustompage
-func (c *CustomPageClient) Create(params CustomPageParams) (CustomPage, *APIResponse, error) {
+func (c CustomPageClient) Create(params CustomPageParams) (CustomPage, *APIResponse, error) {
 	payload, err := json.Marshal(params)
 	if err != nil {
 		return CustomPage{}, nil, fmt.Errorf("unable to marshal request: %w", err)
@@ -172,7 +172,7 @@ func (c *CustomPageClient) Create(params CustomPageParams) (CustomPage, *APIResp
 // Update an existing custom page in ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/updatecustompage
-func (c *CustomPageClient) Update(slug string, params CustomPageParams) (CustomPage, *APIResponse, error) {
+func (c CustomPageClient) Update(slug string, params CustomPageParams) (CustomPage, *APIResponse, error) {
 	payload, err := json.Marshal(params)
 	if err != nil {
 		return CustomPage{}, nil, fmt.Errorf("unable to marshal request: %w", err)
@@ -195,7 +195,7 @@ func (c *CustomPageClient) Update(slug string, params CustomPageParams) (CustomP
 // Delete a custom page in ReadMe.
 //
 // API Reference: https://docs.readme.com/reference/deletecustompages
-func (c *CustomPageClient) Delete(slug string) (bool, *APIResponse, error) {
+func (c CustomPageClient) Delete(slug string) (bool, *APIResponse, error) {
 	apiResponse, err := c.client.APIRequest(&APIRequest{
 		Method:       "DELETE",
 		Endpoint:     fmt.Sprintf("%s/%s", CustomPageEndpoint, slug),

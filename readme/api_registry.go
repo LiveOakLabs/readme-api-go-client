@@ -45,7 +45,7 @@ var _ APIRegistryService = &APIRegistryClient{}
 // it as a string.
 //
 // API Reference: https://docs.readme.com/main/reference/getapiregistry
-func (c *APIRegistryClient) Get(uuid string) (string, *APIResponse, error) {
+func (c APIRegistryClient) Get(uuid string) (string, *APIResponse, error) {
 	apiResponse, err := c.client.APIRequest(&APIRequest{
 		Method:       "GET",
 		Endpoint:     fmt.Sprintf("%s/%s", APIRegistryEndpoint, uuid),
@@ -71,14 +71,14 @@ func (c *APIRegistryClient) Get(uuid string) (string, *APIResponse, error) {
 // The registry UUID is required for retrieving the remote specification.
 // A typical workflow will be to create the registry with this method and follow-up with a call to
 // APISpecification.Create() with the UUID returned from this response.
-func (c *APIRegistryClient) Create(definition string, version ...string) (APIRegistrySaved, *APIResponse, error) {
+func (c APIRegistryClient) Create(definition string, version ...string) (APIRegistrySaved, *APIResponse, error) {
 	var vers string
 	if len(version) > 0 {
 		vers = version[0]
 	}
 
 	response := APIRegistrySaved{}
-	_, apiResponse, err := c.client.APISpecification.uploadDefinition(
+	_, apiResponse, err := c.client.APISpecification.UploadDefinition(
 		"POST",
 		definition,
 		APIRegistryEndpoint,

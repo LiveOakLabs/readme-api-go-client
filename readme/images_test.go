@@ -5,14 +5,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/liveoaklabs/readme-api-go-client/internal/testutil"
+	"github.com/h2non/gock"
 	"github.com/liveoaklabs/readme-api-go-client/readme"
 	"github.com/stretchr/testify/assert"
 )
-
-// imagesTestEndpoint is the endpoint for the images API. Note that this is different from the
-// other API endpoints - this one is undocumented and not part of the official API.
-const imagesTestEndpoint = "https://dash.readme.com/api/images/image-upload"
 
 func Test_Image_Upload(t *testing.T) {
 	testCases := []struct {
@@ -34,8 +30,8 @@ func Test_Image_Upload(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		// mockImage represents a mock image response struct.
-		var mockImage = readme.Image{
+		// Arrange
+		mockImage := readme.Image{
 			URL:      fmt.Sprintf("https://files.readme.io/c6f07db-%s", tc.filename),
 			Filename: tc.filename,
 			Width:    512,
@@ -43,8 +39,9 @@ func Test_Image_Upload(t *testing.T) {
 			Color:    "#000000",
 		}
 
-		// mockImageResponse represents a mock image response body from the API when uploading an image.
-		var mockImageResponse = []any{
+		// mockImageResponse represents a mock image response body from the API
+		// when uploading an image.
+		mockImageResponse := []any{
 			mockImage.URL,
 			mockImage.Filename,
 			mockImage.Width,
@@ -52,35 +49,31 @@ func Test_Image_Upload(t *testing.T) {
 			mockImage.Color,
 		}
 
-		// Arrange
-		mockResponse := testutil.APITestResponse{
-			URL:    imagesTestEndpoint,
-			Status: 200,
-			Body:   testutil.StructToJson(t, mockImageResponse),
-		}
-		api := mockResponse.New(t)
+		gock.New(readme.ImageAPIURL).
+			Post("/").
+			Reply(200).
+			JSON(mockImageResponse)
+		defer gock.Off()
 
 		// Convert base64 image to byte array
 		sampleImage, _ := base64.StdEncoding.DecodeString(tc.source)
 
 		// Act
-		got, _, err := api.Image.Upload(sampleImage, tc.filename)
+		got, _, err := TestClient.Image.Upload(sampleImage, tc.filename)
 
 		// Assert
 		assert.NoError(t, err, "it does not return an error")
 		assert.Equal(t, mockImage, got, "it returns the image struct")
+		assert.True(t, gock.IsDone(), "it makes the expected API call")
 	}
 }
 
 func Test_Image_Upload_Invalid(t *testing.T) {
 	// Arrange
-	mockResponse := testutil.APITestResponse{}
-	api := mockResponse.New(t)
-
 	sampleImage := []byte("not-an-image")
 
 	// Act
-	_, _, err := api.Image.Upload(sampleImage, "not-an-image.png")
+	_, _, err := TestClient.Image.Upload(sampleImage, "not-an-image.png")
 
 	// Assert
 	assert.Error(t, err, "it returns an error when the image type is invalid")

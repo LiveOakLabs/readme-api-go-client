@@ -55,12 +55,12 @@ type VersionService interface {
 	// API Reference: https://docs.readme.com/main/reference/updateversion
 	Update(version string, params VersionParams) (Version, *APIResponse, error)
 
-	// getVersion parses a provided string to determine if it it's a semantic version identifier
-	// (1.0.0) or an API version identifier (id:63ac899d11c4680047ec5970). If it's an API version
-	// identifier, the value is compared with the results from GetAll() to return the semantic
-	// version that's used for API requests. If the specified version is already a semantic version
-	// string, it will be returned as-is.
-	getVersion(version string) (string, error)
+	// GetVersion parses a provided string to determine if it it's a semantic version identifier (1.0.0)
+	// or an API version identifier (id:63ac899d11c4680047ec5970). If it's an API version identifier,
+	// the value is compared with the results from GetAll() to return the semantic version that's used
+	// for API requests. If the specified version is already a semantic version string, it will be
+	// returned as-is.
+	GetVersion(version string) (string, error)
 }
 
 // VersionClient handles communication with the Project related methods of the ReadMe.com API.
@@ -129,13 +129,13 @@ type VersionParams struct {
 // See: https://golang.org/doc/faq#guarantee_satisfies_interface
 var _ VersionService = &VersionClient{}
 
-// getVersion parses a provided string to determine if it it's a semantic version identifier (1.0.0)
+// GetVersion parses a provided string to determine if it it's a semantic version identifier (1.0.0)
 // or an API version identifier (id:63ac899d11c4680047ec5970). If it's an API version identifier,
 // the value is compared with the results from GetAll() to return the semantic version that's used
 // for API requests. If the specified version is already a semantic version string, it will be
 // returned as-is.
-func (c *VersionClient) getVersion(version string) (string, error) {
-	isID, reqID := parseID(version)
+func (c VersionClient) GetVersion(version string) (string, error) {
+	isID, reqID := ParseID(version)
 	if !isID {
 		return version, nil
 	}
@@ -157,7 +157,7 @@ func (c *VersionClient) getVersion(version string) (string, error) {
 // GetAll retrieves a list of versions associated with an API key.
 //
 // API Reference: https://docs.readme.com/main/reference/getversions
-func (c *VersionClient) GetAll() ([]VersionSummary, *APIResponse, error) {
+func (c VersionClient) GetAll() ([]VersionSummary, *APIResponse, error) {
 	var versions []VersionSummary
 
 	apiResponse, err := c.client.APIRequest(&APIRequest{
@@ -180,8 +180,8 @@ func (c *VersionClient) GetAll() ([]VersionSummary, *APIResponse, error) {
 // response from the GetAll() function for best results.
 //
 // API Reference: https://docs.readme.com/main/reference/getversion
-func (c *VersionClient) Get(version string) (Version, *APIResponse, error) {
-	version, err := c.getVersion(version)
+func (c VersionClient) Get(version string) (Version, *APIResponse, error) {
+	version, err := c.GetVersion(version)
 	if err != nil {
 		return Version{}, nil, err
 	}
@@ -201,7 +201,7 @@ func (c *VersionClient) Get(version string) (Version, *APIResponse, error) {
 // Create a new version within a project.
 //
 // API Reference: https://docs.readme.com/main/reference/createversion
-func (c *VersionClient) Create(params VersionParams) (Version, *APIResponse, error) {
+func (c VersionClient) Create(params VersionParams) (Version, *APIResponse, error) {
 	payload, err := json.Marshal(params)
 	if err != nil {
 		return Version{}, nil, fmt.Errorf("unable to parse request: %w", err)
@@ -230,8 +230,8 @@ func (c *VersionClient) Create(params VersionParams) (Version, *APIResponse, err
 // response from the GetAll() function for best results.
 //
 // API Reference: https://docs.readme.com/main/reference/updateversion
-func (c *VersionClient) Update(version string, params VersionParams) (Version, *APIResponse, error) {
-	version, err := c.getVersion(version)
+func (c VersionClient) Update(version string, params VersionParams) (Version, *APIResponse, error) {
+	version, err := c.GetVersion(version)
 	if err != nil {
 		return Version{}, nil, err
 	}
@@ -264,8 +264,8 @@ func (c *VersionClient) Update(version string, params VersionParams) (Version, *
 // response from the GetAll() function for best results.
 //
 // API Reference: https://docs.readme.com/main/reference/deleteversion
-func (c *VersionClient) Delete(version string) (bool, *APIResponse, error) {
-	version, err := c.getVersion(version)
+func (c VersionClient) Delete(version string) (bool, *APIResponse, error) {
+	version, err := c.GetVersion(version)
 	if err != nil {
 		return false, nil, err
 	}

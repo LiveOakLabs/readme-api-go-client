@@ -11,6 +11,8 @@ import (
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint" // Linting (make lint).
 	_ "github.com/princjef/gomarkdoc/cmd/gomarkdoc"         // Markdown documentation generator (go generate ./...).
 	_ "github.com/segmentio/golines"                        // Long line fixer.
-	_ "golang.org/x/vuln/cmd/govulncheck"                   // Code vulnerability checks (make check-vuln).
-	_ "mvdan.cc/gofumpt"                                    // Formatting and linting (make gofumpt).
+	_ "github.com/vektra/mockery/v2"
+	_ "github.com/wadey/gocovmerge"       // Test coverage reporting (make coverage).
+	_ "golang.org/x/vuln/cmd/govulncheck" // Code vulnerability checks (make check-vuln).
+	_ "mvdan.cc/gofumpt"                  // Formatting and linting (make gofumpt).
 )

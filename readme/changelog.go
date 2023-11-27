@@ -98,7 +98,7 @@ func validChangelogType(changelogType string) bool {
 // GetAll retrieves a list of changelogs from ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/getchangelogs
-func (c *ChangelogClient) GetAll(options ...RequestOptions) ([]Changelog, *APIResponse, error) {
+func (c ChangelogClient) GetAll(options ...RequestOptions) ([]Changelog, *APIResponse, error) {
 	var response []Changelog
 
 	apiRequest := &APIRequest{
@@ -121,7 +121,7 @@ func (c *ChangelogClient) GetAll(options ...RequestOptions) ([]Changelog, *APIRe
 // Get retrieves a single changelog from ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/getchangelog
-func (c *ChangelogClient) Get(slug string) (Changelog, *APIResponse, error) {
+func (c ChangelogClient) Get(slug string) (Changelog, *APIResponse, error) {
 	response := Changelog{}
 	apiRequest := &APIRequest{
 		Method:       "GET",
@@ -139,7 +139,7 @@ func (c *ChangelogClient) Get(slug string) (Changelog, *APIResponse, error) {
 // Create a new changelog in ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/createchangelog
-func (c *ChangelogClient) Create(params ChangelogParams) (Changelog, *APIResponse, error) {
+func (c ChangelogClient) Create(params ChangelogParams) (Changelog, *APIResponse, error) {
 	if params.Title == "" {
 		return Changelog{}, nil, fmt.Errorf("title must be provided")
 	}
@@ -169,7 +169,7 @@ func (c *ChangelogClient) Create(params ChangelogParams) (Changelog, *APIRespons
 // Update an existing changelog in ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/updatechangelog
-func (c *ChangelogClient) Update(slug string, params ChangelogParams) (Changelog, *APIResponse, error) {
+func (c ChangelogClient) Update(slug string, params ChangelogParams) (Changelog, *APIResponse, error) {
 	if params.Title == "" {
 		return Changelog{}, nil, fmt.Errorf("title must be provided")
 	}
@@ -199,7 +199,7 @@ func (c *ChangelogClient) Update(slug string, params ChangelogParams) (Changelog
 // Delete a changelog in ReadMe.
 //
 // API Reference: https://docs.readme.com/main/reference/deletechangelog
-func (c *ChangelogClient) Delete(slug string) (bool, *APIResponse, error) {
+func (c ChangelogClient) Delete(slug string) (bool, *APIResponse, error) {
 	apiResponse, err := c.client.APIRequest(&APIRequest{
 		Method:       "DELETE",
 		Endpoint:     fmt.Sprintf("%s/%s", ChangelogEndpoint, slug),

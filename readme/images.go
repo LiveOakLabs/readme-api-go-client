@@ -84,7 +84,7 @@ func buildForm(filename string, source []byte) ([]byte, string, error) {
 }
 
 // Upload an image to ReadMe.
-func (c *ImageClient) Upload(source []byte, filename ...string) (Image, *APIResponse, error) {
+func (c ImageClient) Upload(source []byte, filename ...string) (Image, *APIResponse, error) {
 	var image Image
 
 	// Validate the image type.
