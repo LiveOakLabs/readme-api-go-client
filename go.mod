@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/boumenot/gocover-cobertura v1.2.0
-	github.com/charmbracelet/log v0.3.0
+	github.com/charmbracelet/log v0.3.1
 	github.com/golangci/golangci-lint v1.55.2
 	github.com/h2non/gock v1.2.0
 	github.com/princjef/gomarkdoc v1.1.0
