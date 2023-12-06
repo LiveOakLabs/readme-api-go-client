@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
           check-latest: true # Ensure the cache isn't stale.
@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
           check-latest: true # Ensure the cache isn't stale.
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
           check-latest: true # Ensure the cache isn't stale.
