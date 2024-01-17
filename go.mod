@@ -81,7 +81,7 @@ require (
 	github.com/chavacava/garif v0.1.0 // indirect
 	github.com/cheggaaa/pb/v3 v3.1.2 // indirect
 	github.com/chigopher/pathlib v0.15.0 // indirect
-	github.com/cloudflare/circl v1.3.3 // indirect
+	github.com/cloudflare/circl v1.3.7 // indirect
 	github.com/curioswitch/go-reassign v0.2.0 // indirect
 	github.com/cyphar/filepath-securejoin v0.2.4 // indirect
 	github.com/daixiang0/gci v0.11.2 // indirect
