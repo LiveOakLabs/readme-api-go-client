@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.2.0 - 2024-01-19
+
+### Features
+
+- feature: add outbound-ips implementation @joshbeard (#48)
+
+### Maintenance
+
+- build(deps): bump github.com/cloudflare/circl from 1.3.3 to 1.3.7 @dependabot (#47)
+- build(deps): bump github.com/go-git/go-git/v5 from 5.7.0 to 5.11.0 @dependabot (#46)
+- build(deps): bump golang.org/x/crypto from 0.14.0 to 0.17.0 @dependabot (#45)
+- build(deps): bump github/codeql-action from 2 to 3 @dependabot (#44)
+- build(deps): bump actions/setup-go from 4 to 5 @dependabot (#43)
+- build(deps): bump github.com/vektra/mockery/v2 from 2.37.1 to 2.38.0 @dependabot (#41)
+- feature: refactor unit tests; add mocks, test data @joshbeard (#40)
+
 ## v0.1.3 - 2023-11-08
 
 ### Bug Fixes
