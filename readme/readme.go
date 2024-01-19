@@ -63,6 +63,8 @@ type Client struct {
 	Doc DocService
 	// Image implements the ReadMe Image API for uploading images.
 	Image ImageService
+	// OutboundIP implements the ReadMe OutboundIP API for retrieving outbound IP addresses.
+	OutboundIP OutboundIPService
 	// Project implements the ReadMe Project API for retrieving metadata about the project.
 	Project ProjectService
 	// Version implements the ReadMe Version API for managing versions.
@@ -174,6 +176,7 @@ func NewClient(token string, apiURL ...string) (*Client, error) {
 	client.CustomPage = &CustomPageClient{client: client}
 	client.Doc = &DocClient{client: client}
 	client.Image = &ImageClient{client: client}
+	client.OutboundIP = &OutboundIPClient{client: client}
 	client.Project = &ProjectClient{client: client}
 	client.Version = &VersionClient{client: client}
 
