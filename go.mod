@@ -13,7 +13,7 @@ require (
 	github.com/vektra/mockery/v2 v2.38.0
 	github.com/wadey/gocovmerge v0.0.0-20160331181800-b5bfa59ec0ad
 	golang.org/x/vuln v1.0.1
-	mvdan.cc/gofumpt v0.5.0
+	mvdan.cc/gofumpt v0.6.0
 )
 
 // Compatible replacements for outdated/vulnerable packages.
