@@ -12,7 +12,7 @@ require (
 	github.com/stretchr/testify v1.8.4
 	github.com/vektra/mockery/v2 v2.38.0
 	github.com/wadey/gocovmerge v0.0.0-20160331181800-b5bfa59ec0ad
-	golang.org/x/vuln v1.0.3
+	golang.org/x/vuln v1.0.4
 	mvdan.cc/gofumpt v0.6.0
 )
 
