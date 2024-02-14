@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.2.1 - 2024-02-14
+
+### Bug Fixes
+
+- changelog type is optional @joshbeard (#57)
+
+### Maintenance
+
+- build(deps): bump github.com/golangci/golangci-lint from 1.55.2 to 1.56.1 @dependabot (#55)
+- build(deps): bump securego/gosec from 2.18.2 to 2.19.0 @dependabot (#56)
+- build(deps): bump golang.org/x/vuln from 1.0.3 to 1.0.4 @dependabot (#54)
+- build(deps): bump golang.org/x/vuln from 1.0.1 to 1.0.3 @dependabot (#51)
+- build(deps): bump release-drafter/release-drafter from 5 to 6 @dependabot (#53)
+- build(deps): bump mvdan.cc/gofumpt from 0.5.0 to 0.6.0 @dependabot (#52)
+- build(deps): bump github.com/segmentio/golines from 0.11.0 to 0.12.2 @dependabot (#49)
+
 ## v0.2.0 - 2024-01-19
 
 ### Features
