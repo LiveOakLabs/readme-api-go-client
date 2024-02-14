@@ -97,7 +97,7 @@ func Test_Changelog_Create(t *testing.T) {
 
 		// Assert
 		assert.ErrorContains(t, err,
-			"type must be added, fixed, improved, deprecated, or removed",
+			"type must be added, fixed, improved, deprecated, removed, or left unspecified",
 			"it returns the expected error",
 		)
 		assert.True(t, gock.IsDone(), "it makes the expected API call")
@@ -155,7 +155,7 @@ func Test_Changelog_Update(t *testing.T) {
 
 		// Assert
 		assert.ErrorContains(t, err,
-			"type must be added, fixed, improved, deprecated, or removed",
+			"type must be added, fixed, improved, deprecated, removed, or left unspecified",
 			"it returns the expected error",
 		)
 	})
