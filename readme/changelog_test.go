@@ -159,6 +159,26 @@ func Test_Changelog_Update(t *testing.T) {
 			"it returns the expected error",
 		)
 	})
+
+	t.Run("when called with no type", func(t *testing.T) {
+		// Arrange
+		expect := testdata.Changelogs[0]
+		gock.New(TestClient.APIURL).
+			Put(readme.ChangelogEndpoint + "/" + expect.Slug).
+			Reply(200).
+			JSON(testdata.Changelogs[0])
+		defer gock.Off()
+
+		// Act
+		_, _, err := TestClient.Changelog.Update("some-test", readme.ChangelogParams{
+			Title:  testdata.Changelogs[0].Title,
+			Body:   testdata.Changelogs[0].Body,
+			Hidden: &testdata.Changelogs[0].Hidden,
+		})
+
+		// Assert
+		assert.NoError(t, err, "it does not return an error")
+	})
 }
 
 func Test_Changelog_Delete(t *testing.T) {

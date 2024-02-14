@@ -88,7 +88,7 @@ type ChangelogParams struct {
 // validChangelogType validates the 'type' field when creating or updating a changelog.
 func validChangelogType(changelogType string) bool {
 	switch changelogType {
-	case "added", "fixed", "improved", "deprecated", "removed":
+	case "", "added", "fixed", "improved", "deprecated", "removed":
 		return true
 	}
 
@@ -144,7 +144,7 @@ func (c ChangelogClient) Create(params ChangelogParams) (Changelog, *APIResponse
 		return Changelog{}, nil, fmt.Errorf("title must be provided")
 	}
 	if !validChangelogType(params.Type) {
-		return Changelog{}, nil, fmt.Errorf("type must be added, fixed, improved, deprecated, or removed")
+		return Changelog{}, nil, fmt.Errorf("type must be added, fixed, improved, deprecated, removed, or left unspecified")
 	}
 
 	payload, err := json.Marshal(params)
@@ -174,7 +174,7 @@ func (c ChangelogClient) Update(slug string, params ChangelogParams) (Changelog,
 		return Changelog{}, nil, fmt.Errorf("title must be provided")
 	}
 	if !validChangelogType(params.Type) {
-		return Changelog{}, nil, fmt.Errorf("type must be added, fixed, improved, deprecated, or removed")
+		return Changelog{}, nil, fmt.Errorf("type must be added, fixed, improved, deprecated, removed, or left unspecified")
 	}
 
 	payload, err := json.Marshal(params)
