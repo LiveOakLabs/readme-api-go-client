@@ -2,8 +2,6 @@ module github.com/liveoaklabs/readme-api-go-client
 
 go 1.21
 
-toolchain go1.21.7
-
 require (
 	github.com/boumenot/gocover-cobertura v1.2.0
 	github.com/golangci/golangci-lint v1.56.1
