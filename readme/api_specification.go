@@ -6,8 +6,6 @@ import (
 	"io"
 	"mime/multipart"
 	"strings"
-
-	"github.com/charmbracelet/log"
 )
 
 // APISpecificationEndpoint is the ReadMe API Endpoint for API Specifications.
@@ -128,7 +126,6 @@ func (c APISpecificationClient) GetAll(options ...RequestOptions) ([]APISpecific
 		}
 		if len(options) > 0 {
 			apiRequest.RequestOptions = options[0]
-			log.Infof("GetAll version: %s", apiRequest.RequestOptions.Version)
 		}
 
 		apiResponse, hasNextPage, err = c.client.paginatedRequest(apiRequest, page)
@@ -143,7 +140,6 @@ func (c APISpecificationClient) GetAll(options ...RequestOptions) ([]APISpecific
 
 		page = page + 1
 	}
-	log.Infof("GetAll version in response: %s", apiResponse.Request.RequestOptions.Version)
 
 	return specifications, apiResponse, nil
 }
