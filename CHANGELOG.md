@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.2 - 2024-02-15
+
+### Changes
+
+- Remove stray info log line @joshbeard (#58)
+
 ## v0.2.1 - 2024-02-14
 
 ### Bug Fixes
