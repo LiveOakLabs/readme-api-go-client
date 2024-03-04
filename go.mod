@@ -8,7 +8,7 @@ require (
 	github.com/h2non/gock v1.2.0
 	github.com/princjef/gomarkdoc v1.1.0
 	github.com/segmentio/golines v0.12.2
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/vektra/mockery/v2 v2.38.0
 	github.com/wadey/gocovmerge v0.0.0-20160331181800-b5bfa59ec0ad
 	golang.org/x/vuln v1.0.4
@@ -213,7 +213,7 @@ require (
 	github.com/spf13/viper v1.16.0 // indirect
 	github.com/ssgreg/nlreturn/v2 v2.2.1 // indirect
 	github.com/stbenjam/no-sprintf-host-port v0.1.1 // indirect
-	github.com/stretchr/objx v0.5.0 // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect
 	github.com/t-yuki/gocover-cobertura v0.0.0-20180217150009-aaee18c8195c // indirect
 	github.com/tdakkota/asciicheck v0.2.0 // indirect
