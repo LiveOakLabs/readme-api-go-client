@@ -1,6 +1,7 @@
 module github.com/liveoaklabs/readme-api-go-client
 
 go 1.21
+toolchain go1.22.0
 
 require (
 	github.com/boumenot/gocover-cobertura v1.2.0
@@ -9,7 +10,7 @@ require (
 	github.com/princjef/gomarkdoc v1.1.0
 	github.com/segmentio/golines v0.12.2
 	github.com/stretchr/testify v1.9.0
-	github.com/vektra/mockery/v2 v2.38.0
+	github.com/vektra/mockery/v2 v2.42.0
 	github.com/wadey/gocovmerge v0.0.0-20160331181800-b5bfa59ec0ad
 	golang.org/x/vuln v1.0.4
 	mvdan.cc/gofumpt v0.6.0
@@ -77,7 +78,7 @@ require (
 	github.com/charithe/durationcheck v0.0.10 // indirect
 	github.com/chavacava/garif v0.1.0 // indirect
 	github.com/cheggaaa/pb/v3 v3.1.2 // indirect
-	github.com/chigopher/pathlib v0.15.0 // indirect
+	github.com/chigopher/pathlib v0.19.1 // indirect
 	github.com/cloudflare/circl v1.3.7 // indirect
 	github.com/curioswitch/go-reassign v0.2.0 // indirect
 	github.com/cyphar/filepath-securejoin v0.2.4 // indirect
