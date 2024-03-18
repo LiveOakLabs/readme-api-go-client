@@ -1,7 +1,7 @@
 module github.com/liveoaklabs/readme-api-go-client
 
 go 1.21
-toolchain go1.22.0
+toolchain go1.22.1
 
 require (
 	github.com/boumenot/gocover-cobertura v1.2.0
@@ -248,7 +248,7 @@ require (
 	golang.org/x/term v0.17.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.18.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
