@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.2.3 - 2024-06-26
+
+This is a maintenance release to update dependencies.
+
+### Changes
+
+- build(deps): bump securego/gosec from 2.19.0 to 2.20.0 @dependabot (#73)
+- build(deps): bump github.com/golangci/golangci-lint from 1.57.2 to 1.59.1 @dependabot (#79)
+- build(deps): bump golang.org/x/vuln from 1.0.4 to 1.1.2 @dependabot (#80)
+- build(deps): bump github.com/vektra/mockery/v2 from 2.42.1 to 2.43.2 @dependabot (#78)
+- build(deps): bump golang.org/x/net from 0.22.0 to 0.23.0 @dependabot (#67)
+- build(deps): bump github.com/golangci/golangci-lint from 1.57.1 to 1.57.2 @dependabot (#65)
+- build(deps): bump github.com/golangci/golangci-lint from 1.56.2 to 1.57.1 @dependabot (#64)
+- build(deps): bump github.com/vektra/mockery/v2 from 2.42.0 to 2.42.1 @dependabot (#63)
+- build(deps): bump google.golang.org/protobuf from 1.31.0 to 1.33.0 @dependabot (#62)
+- build(deps): bump github.com/vektra/mockery/v2 from 2.38.0 to 2.42.0 @dependabot (#59)
+- build(deps): bump github.com/stretchr/testify from 1.8.4 to 1.9.0 @dependabot (#61)
+- build(deps): bump github.com/golangci/golangci-lint from 1.56.1 to 1.56.2 @dependabot (#60)
+
 ## v0.2.2 - 2024-02-15
 
 ### Changes
