@@ -213,7 +213,7 @@ func Test_Doc_Delete(t *testing.T) {
 		defer gock.Off()
 
 		reqOpts := readme.RequestOptions{Version: "1.1.0"}
-		expectErr := "API responded with a non-OK status: 400"
+		expectErr := "ReadMe API Error: 400 on DELETE"
 
 		// Act
 		got, _, err := TestClient.Doc.Delete("some-test-doc", reqOpts)
@@ -277,7 +277,7 @@ func Test_Doc_Search(t *testing.T) {
 			JSON(expect)
 		defer gock.Off()
 
-		expectErr := "API responded with a non-OK status: 400"
+		expectErr := "ReadMe API Error: 400 on POST"
 
 		// Act
 		_, _, err := TestClient.Doc.Search("something")

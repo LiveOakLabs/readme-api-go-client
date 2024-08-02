@@ -42,7 +42,7 @@ func Test_Version_GetAll(t *testing.T) {
 		t.Run(testName, func(t *testing.T) {
 			// Arrange
 			expect := readme.APIErrorResponse{Error: tc.errMsg}
-			expectErr := fmt.Sprintf("API responded with a non-OK status: %v", tc.status)
+			expectErr := fmt.Sprintf("ReadMe API Error: %v on GET", tc.status)
 			gock.New(TestClient.APIURL).
 				Get(readme.VersionEndpoint).
 				Reply(tc.status).
@@ -122,7 +122,7 @@ func Test_Version_Get(t *testing.T) {
 				JSON(expect)
 			defer gock.Off()
 
-			expectErr := fmt.Sprintf("API responded with a non-OK status: %v", tc.status)
+			expectErr := fmt.Sprintf("ReadMe API Error: %v on GET", tc.status)
 
 			// Act
 			_, apiResponse, err := TestClient.Version.Get("99.99.99")
@@ -242,7 +242,7 @@ func Test_Version_Create_and_Update(t *testing.T) {
 			Version: "1.1.x",
 		}
 
-		expect := "API responded with a non-OK status: 404"
+		expect := "ReadMe API Error: 404 on PUT"
 
 		// Act
 		_, _, err := TestClient.Version.Update("1.1.x", updateParams)
@@ -284,7 +284,7 @@ func Test_Version_Delete(t *testing.T) {
 		got, apiErrorResponse, err := TestClient.Version.Delete("1.0.0")
 
 		// Assert
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 400",
+		assert.ErrorContains(t, err, "ReadMe API Error: 400 on DELETE",
 			"it returns the expected error")
 		assert.Equal(t, apiErrorResponse.APIErrorResponse.Error,
 			"VERSION_CANT_REMOVE_STABLE",

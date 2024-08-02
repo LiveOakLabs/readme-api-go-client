@@ -200,7 +200,7 @@ func (c *Client) APIRequest(request *APIRequest) (*APIResponse, error) {
 	}
 
 	// Verify the HTTP response from the API.
-	apiErrorResponse, err := checkResponseStatus(body, httpResponse.StatusCode, request.OkStatusCode)
+	apiErrorResponse, err := checkResponseStatus(body, httpResponse.StatusCode, request)
 	if err != nil {
 		apiResponse.APIErrorResponse = apiErrorResponse
 
@@ -257,9 +257,9 @@ func (c *Client) doRequest(request *APIRequest) ([]byte, http.Response, error) {
 //
 // If the response code matches a provided code listed in okCodes, no error is returned.
 // If the response code doesn't match, an error and APIErrorResponse is returned.
-func checkResponseStatus(body []byte, responseCode int, okCodes []int) (APIErrorResponse, error) {
+func checkResponseStatus(body []byte, responseCode int, req *APIRequest) (APIErrorResponse, error) {
 	var apiErrorResponse APIErrorResponse
-	for _, okCode := range okCodes {
+	for _, okCode := range req.OkStatusCode {
 		if responseCode == okCode {
 			return apiErrorResponse, nil
 		}
@@ -270,7 +270,9 @@ func checkResponseStatus(body []byte, responseCode int, okCodes []int) (APIError
 		return apiErrorResponse, fmt.Errorf("unable to decode API error response: %w", err)
 	}
 
-	return apiErrorResponse, fmt.Errorf("API responded with a non-OK status: %v", responseCode)
+	return apiErrorResponse,
+		fmt.Errorf("ReadMe API Error: %v on %s %s: %s",
+			responseCode, req.Method, req.Endpoint, body)
 }
 
 // prepareRequest prepares an http.Request for the ReadMe API.

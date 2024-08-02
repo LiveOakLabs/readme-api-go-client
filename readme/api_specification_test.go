@@ -76,7 +76,7 @@ func Test_APISpecification_GetAll(t *testing.T) {
 
 		// Assert
 		assert.Error(t, err, "it returns an error")
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 400",
+		assert.ErrorContains(t, err, "ReadMe API Error: 400 on GET",
 			"it returns expected error")
 		assert.True(t, gock.IsDone(), "it asserts that all mocks were called")
 	})
@@ -386,7 +386,7 @@ func Test_APISpecification_Create(t *testing.T) {
 			JSON(testdata.APISpecResponseSpecFileEmpty.APIErrorResponse)
 
 		expect := "SPEC_FILE_EMPTY"
-		expectErr := "API responded with a non-OK status: 400"
+		expectErr := "ReadMe API Error: 400 on POST"
 
 		// Act
 		_, got, err := TestClient.APISpecification.Create("")
@@ -449,7 +449,7 @@ func Test_APISpecification_Delete(t *testing.T) {
 			JSON(expect)
 		defer gock.Off()
 
-		expectErr := "API responded with a non-OK status: 400"
+		expectErr := "ReadMe API Error: 400 on DELETE"
 
 		// Act
 		got, gotResponse, err := TestClient.APISpecification.Delete("0123456789")
