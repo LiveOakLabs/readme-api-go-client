@@ -41,7 +41,7 @@ func Test_Project_Get(t *testing.T) {
 		_, got, err := TestClient.Project.Get()
 
 		// Assert
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 401",
+		assert.ErrorContains(t, err, "ReadMe API Error: 401 on GET",
 			"it returns the expected error")
 		assert.Equal(t, expect, got.APIErrorResponse,
 			"it returns the API error response")

@@ -210,7 +210,7 @@ func Test_Changelog_Delete(t *testing.T) {
 		got, _, err := TestClient.Changelog.Delete("some-test")
 
 		// Assert
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 404", "it returns the expected error")
+		assert.ErrorContains(t, err, "ReadMe API Error: 404 on DELETE", "it returns the expected error")
 		assert.False(t, got, "it returns false")
 		assert.True(t, gock.IsDone(), "it makes the expected API call")
 	})

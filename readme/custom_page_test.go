@@ -188,7 +188,7 @@ func Test_CustomPages_Delete(t *testing.T) {
 		got, _, err := TestClient.CustomPage.Delete("foo")
 
 		// Assert
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 400",
+		assert.ErrorContains(t, err, "ReadMe API Error: 400 on DELETE",
 			"it return the expected error")
 		assert.False(t, got, "it returns false")
 		assert.True(t, gock.IsDone(), "it makes the expected API call")

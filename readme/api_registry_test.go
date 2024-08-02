@@ -42,7 +42,7 @@ func Test_APIRegistry_Get(t *testing.T) {
 		got, gotResponse, err := TestClient.APIRegistry.Get("invalid")
 
 		// Assert
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 404",
+		assert.ErrorContains(t, err, "ReadMe API Error: 404 on GET",
 			"it returns the expected error")
 		assert.Equal(t, string(expect.Body), got,
 			"it returns the expected body")
@@ -109,7 +109,7 @@ func Test_APIRegistry_Create(t *testing.T) {
 		// Assert
 		assert.Equal(t, "ERROR_SPEC_INVALID", apiResponse.APIErrorResponse.Error,
 			"it returns the API error")
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 400",
+		assert.ErrorContains(t, err, "ReadMe API Error: 400 on POST",
 			"it returns expected application error")
 		assert.True(t, gock.IsDone(), "it makes the expected API call")
 	})

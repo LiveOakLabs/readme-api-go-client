@@ -254,7 +254,7 @@ func Test_Category_Delete(t *testing.T) {
 
 		// Assert
 		assert.Error(t, err, "it returns an error")
-		assert.ErrorContains(t, err, "API responded with a non-OK status: 400", "it returns the expected error")
+		assert.ErrorContains(t, err, "ReadMe API Error: 400 on DELETE", "it returns the expected error")
 		assert.False(t, got, "it returns false")
 		assert.True(t, gock.IsDone(), "it makes the expected API call")
 	})
