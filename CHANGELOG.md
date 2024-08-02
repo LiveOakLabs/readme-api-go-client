@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3.0 - 2024-08-02
+
+### Changes
+
+- Improve API error responses @joshbeard (#82)
+
 ## v0.2.3 - 2024-06-26
 
 This is a maintenance release to update dependencies.
