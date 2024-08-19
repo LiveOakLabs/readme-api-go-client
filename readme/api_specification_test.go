@@ -68,7 +68,7 @@ func Test_APISpecification_GetAll(t *testing.T) {
 			Reply(400).
 			AddHeader("Link", `<`+apiSpecEndpointPaginated+`&page=2>; rel="next", <>; rel="prev", <>; rel="last"`).
 			AddHeader("x-total-count", "1").
-			JSON(testdata.APISpecResponseVersionEmtpy.APIErrorResponse)
+			JSON(testdata.APISpecResponseVersionEmpty.APIErrorResponse)
 		defer gock.Off()
 
 		// Act
@@ -272,7 +272,7 @@ func Test_APISpecification_Get(t *testing.T) {
 		gock.New(TestClient.APIURL).
 			Get(readme.APISpecificationEndpoint).
 			Reply(400).
-			JSON(testdata.APISpecResponseVersionEmtpy.APIErrorResponse)
+			JSON(testdata.APISpecResponseVersionEmpty.APIErrorResponse)
 		defer gock.Off()
 
 		expect := "unable to retrieve API specifications"
@@ -442,7 +442,7 @@ func Test_APISpecification_Delete(t *testing.T) {
 
 	t.Run("when called with invalid ID and API response with 400", func(t *testing.T) {
 		// Arrange
-		expect := testdata.APISpecResponseVersionEmtpy.APIErrorResponse
+		expect := testdata.APISpecResponseVersionEmpty.APIErrorResponse
 		gock.New(TestClient.APIURL).
 			Delete(readme.APISpecificationEndpoint + "/0123456789").
 			Reply(400).

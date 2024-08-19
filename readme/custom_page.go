@@ -86,47 +86,18 @@ type CustomPageParams struct {
 //
 // API Reference: https://docs.readme.com/main/reference/getcustompages
 func (c CustomPageClient) GetAll(options ...RequestOptions) ([]CustomPage, *APIResponse, error) {
-	var customPages []CustomPage
-	var apiResponse *APIResponse
-	var err error
-	hasNextPage := false
-
-	// Initialize pagination counter.
-	page := 1
-	if len(options) > 0 {
-		if options[0].Page != 0 {
-			page = options[0].Page
-		}
+	var results []CustomPage
+	opts := parseRequestOptions(options)
+	apiResponse, err := c.client.fetchAllPages(CustomPageEndpoint, opts, &results)
+	if err != nil {
+		return nil, apiResponse, err
 	}
 
-	for {
-		var paginatedResult []CustomPage
-
-		apiRequest := &APIRequest{
-			Method:       "GET",
-			Endpoint:     CustomPageEndpoint,
-			UseAuth:      true,
-			OkStatusCode: []int{200},
-			Response:     &paginatedResult,
-		}
-		if len(options) > 0 {
-			apiRequest.RequestOptions = options[0]
-		}
-
-		apiResponse, hasNextPage, err = c.client.paginatedRequest(apiRequest, page)
-		if err != nil {
-			return customPages, apiResponse, fmt.Errorf("unable to retrieve custom pages: %w", err)
-		}
-		customPages = append(customPages, paginatedResult...)
-
-		if !hasNextPage {
-			break
-		}
-
-		page = page + 1
+	if len(results) == 0 {
+		return nil, apiResponse, nil
 	}
 
-	return customPages, apiResponse, nil
+	return results, apiResponse, nil
 }
 
 // Get a single custom page's data from ReadMe.

@@ -31,7 +31,7 @@ func Test_APIRegistry_Get(t *testing.T) {
 
 	t.Run("when API responds with 404", func(t *testing.T) {
 		// Arrange
-		expect := testdata.APISpecResponseVersionEmtpy
+		expect := testdata.APISpecResponseVersionEmpty
 		gock.New(TestClient.APIURL).
 			Get(readme.APIRegistryEndpoint + "/invalid").
 			Reply(404).
