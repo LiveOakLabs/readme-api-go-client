@@ -99,23 +99,18 @@ func validChangelogType(changelogType string) bool {
 //
 // API Reference: https://docs.readme.com/main/reference/getchangelogs
 func (c ChangelogClient) GetAll(options ...RequestOptions) ([]Changelog, *APIResponse, error) {
-	var response []Changelog
-
-	apiRequest := &APIRequest{
-		Method:       "GET",
-		Endpoint:     ChangelogEndpoint,
-		UseAuth:      true,
-		OkStatusCode: []int{200},
-		Response:     &response,
+	var results []Changelog
+	opts := parseRequestOptions(options)
+	apiResponse, err := c.client.fetchAllPages(ChangelogEndpoint, opts, &results)
+	if err != nil {
+		return nil, apiResponse, fmt.Errorf("unable to retrieve changelogs: %w", err)
 	}
 
-	if len(options) > 0 {
-		apiRequest.RequestOptions = options[0]
+	if len(results) == 0 {
+		return nil, apiResponse, nil
 	}
 
-	apiResponse, err := c.client.APIRequest(apiRequest)
-
-	return response, apiResponse, err
+	return results, apiResponse, err
 }
 
 // Get retrieves a single changelog from ReadMe.

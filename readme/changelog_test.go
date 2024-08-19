@@ -28,21 +28,47 @@ func Test_Changelog_Get(t *testing.T) {
 }
 
 func Test_Changelog_GetAll(t *testing.T) {
-	// Arrange
-	expect := testdata.Changelogs
-	gock.New(TestClient.APIURL).
-		Get(readme.ChangelogEndpoint).
-		Reply(200).
-		JSON(expect)
-	defer gock.Off()
+	testCases := []struct {
+		name     string
+		page     int
+		expected []readme.Changelog
+	}{
+		{
+			name:     "when called with no page",
+			page:     1,
+			expected: testdata.Changelogs,
+		},
+		{
+			name:     "when called with page 2",
+			page:     2,
+			expected: testdata.Changelogs,
+		},
+		{
+			name: "when there are no changelogs",
+			page: 1,
+		},
+	}
 
-	// Act
-	got, _, err := TestClient.Changelog.GetAll(readme.RequestOptions{Page: 1})
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			// Arrange
+			gock.New(TestClient.APIURL).
+				Get(readme.ChangelogEndpoint).
+				Reply(200).
+				AddHeader("Link", `</changelogs&page=2>; rel="next", <>; rel="prev", <>; rel="last"`).
+				AddHeader("x-total-count", "1").
+				JSON(tc.expected)
+			defer gock.Off()
 
-	// Assert
-	assert.NoError(t, err, "it does not return an error")
-	assert.Equal(t, expect, got, "it returns slice of Changelog structs")
-	assert.True(t, gock.IsDone(), "it makes the expected API call")
+			// Act
+			got, _, err := TestClient.Changelog.GetAll(readme.RequestOptions{Page: 1})
+
+			// Assert
+			assert.NoError(t, err, "it does not return an error")
+			assert.Equal(t, tc.expected, got, "it returns slice of Changelog structs")
+			assert.True(t, gock.IsDone(), "it makes the expected API call")
+		})
+	}
 }
 
 func Test_Changelog_Create(t *testing.T) {

@@ -218,7 +218,7 @@ type DocParams struct {
 	Title string `json:"title"`
 	// Type of the page. The available types all show up under the /docs/ URL path of your docs
 	// project (also known as the "guides" section). Can be "basic" (most common), "error" (page
-	// desribing an API error), or "link" (page that redirects to an external link).
+	// describing an API error), or "link" (page that redirects to an external link).
 	Type string `json:"type,omitempty"`
 }
 

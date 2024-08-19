@@ -104,7 +104,7 @@ type Category struct {
 type CategoryParams struct {
 	// Title is a *required* short title for the category. This is what will show in the sidebar.
 	Title string `json:"title"`
-	// Type is tye type of category, which can be "reference" or "guide".
+	// Type is the type of category, which can be "reference" or "guide".
 	Type string `json:"type"`
 }
 
@@ -186,47 +186,18 @@ func validCategoryType(categoryType string) bool {
 //
 // API Reference: https://docs.readme.com/reference/getcategories
 func (c CategoryClient) GetAll(options ...RequestOptions) ([]Category, *APIResponse, error) {
-	var err error
-	var categories []Category
-	var apiResponse *APIResponse
-	hasNextPage := false
-
-	// Initialize pagination counter.
-	page := 1
-	if len(options) > 0 {
-		if options[0].Page != 0 {
-			page = options[0].Page
-		}
+	var results []Category
+	opts := parseRequestOptions(options)
+	apiResponse, err := c.client.fetchAllPages(CategoryEndpoint, opts, &results)
+	if err != nil {
+		return results, apiResponse, fmt.Errorf("unable to retrieve categories: %w", err)
 	}
 
-	for {
-		var paginatedResult []Category
-
-		apiRequest := &APIRequest{
-			Method:       "GET",
-			Endpoint:     CategoryEndpoint,
-			UseAuth:      true,
-			OkStatusCode: []int{200},
-			Response:     &paginatedResult,
-		}
-		if len(options) > 0 {
-			apiRequest.RequestOptions = options[0]
-		}
-
-		apiResponse, hasNextPage, err = c.client.paginatedRequest(apiRequest, page)
-		if err != nil {
-			return categories, apiResponse, fmt.Errorf("unable to retrieve categories: %w", err)
-		}
-		categories = append(categories, paginatedResult...)
-
-		if !hasNextPage {
-			break
-		}
-
-		page = page + 1
+	if len(results) == 0 {
+		return nil, apiResponse, nil
 	}
 
-	return categories, apiResponse, nil
+	return results, apiResponse, nil
 }
 
 // Get a single category on ReadMe.com.

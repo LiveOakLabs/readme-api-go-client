@@ -382,6 +382,56 @@ func (c *Client) paginatedRequest(apiRequest *APIRequest, page int) (*APIRespons
 	return apiResponse, true, nil
 }
 
+// fetchAllPages retrieves all pages of data from a paginated endpoint.
+func (c *Client) fetchAllPages(
+	endpoint string,
+	options *RequestOptions,
+	result interface{},
+) (*APIResponse, error) {
+	hasNextPage := false
+	page := 1
+	var apiResponse *APIResponse
+	var err error
+
+	if options != nil && options.Page != 0 {
+		page = options.Page
+	}
+
+	for {
+		apiRequest := &APIRequest{
+			Method:       "GET",
+			Endpoint:     endpoint,
+			UseAuth:      true,
+			OkStatusCode: []int{200},
+			Response:     result,
+		}
+		if options != nil {
+			apiRequest.RequestOptions = *options
+		}
+
+		apiResponse, hasNextPage, err = c.paginatedRequest(apiRequest, page)
+		if err != nil {
+			return apiResponse, fmt.Errorf("unable to retrieve data: %w", err)
+		}
+
+		if !hasNextPage {
+			break
+		}
+		page++
+	}
+
+	return apiResponse, nil
+}
+
+// parseRequestOptions is a helper function to parse the RequestOptions slice
+// and return the first element as a *RequestOptions struct.
+func parseRequestOptions(options []RequestOptions) *RequestOptions {
+	if len(options) > 0 {
+		return &options[0]
+	}
+	return nil
+}
+
 // HasNextPage checks if a "next" link is provided in the "links" response header for pagination,
 // indicating the request has a next page.
 //

@@ -101,47 +101,18 @@ type APISpecificationSaved struct {
 //
 // API Reference: https://docs.readme.com/reference/getapispecification
 func (c APISpecificationClient) GetAll(options ...RequestOptions) ([]APISpecification, *APIResponse, error) {
-	var specifications []APISpecification
-	var apiResponse *APIResponse
-	var err error
-	hasNextPage := false
-
-	// Initialize pagination counter.
-	page := 1
-	if len(options) > 0 {
-		if options[0].Page != 0 {
-			page = options[0].Page
-		}
+	var results []APISpecification
+	opts := parseRequestOptions(options)
+	apiResponse, err := c.client.fetchAllPages(APISpecificationEndpoint, opts, &results)
+	if err != nil {
+		return results, apiResponse, fmt.Errorf("unable to retrieve specifications: %w", err)
 	}
 
-	for {
-		var specPaginatedResult []APISpecification
-
-		apiRequest := &APIRequest{
-			Method:       "GET",
-			Endpoint:     APISpecificationEndpoint,
-			UseAuth:      true,
-			OkStatusCode: []int{200},
-			Response:     &specPaginatedResult,
-		}
-		if len(options) > 0 {
-			apiRequest.RequestOptions = options[0]
-		}
-
-		apiResponse, hasNextPage, err = c.client.paginatedRequest(apiRequest, page)
-		if err != nil {
-			return specifications, apiResponse, fmt.Errorf("unable to retrieve specifications: %w", err)
-		}
-		specifications = append(specifications, specPaginatedResult...)
-
-		if !hasNextPage {
-			break
-		}
-
-		page = page + 1
+	if len(results) == 0 {
+		return nil, apiResponse, nil
 	}
 
-	return specifications, apiResponse, nil
+	return results, apiResponse, nil
 }
 
 // Get a single API specification with a provided ID.

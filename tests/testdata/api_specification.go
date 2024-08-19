@@ -24,7 +24,7 @@ var APISpecifications = []readme.APISpecification{
 	},
 }
 
-var APISpecResponseVersionEmtpy = readme.APIResponse{
+var APISpecResponseVersionEmpty = readme.APIResponse{
 	APIErrorResponse: readme.APIErrorResponse{
 		Error:      "VERSION_EMPTY",
 		Message:    "string",
