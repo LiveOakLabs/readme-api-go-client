@@ -2,7 +2,7 @@ module github.com/liveoaklabs/readme-api-go-client
 
 go 1.22
 
-// toolchain go1.22.5
+toolchain go1.22.5
 
 require (
 	github.com/boumenot/gocover-cobertura v1.2.0
