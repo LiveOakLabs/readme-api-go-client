@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.4.0 - 2024-08-19
+
+### Changes
+
+- build(deps): bump github.com/vektra/mockery/v2 from 2.43.2 to 2.44.1 @dependabot (#83)
+- build(deps): bump golang.org/x/vuln from 1.1.2 to 1.1.3 @dependabot (#81)
+- Pagination: more consistent, add to changelogs (BREAKING CHANGE) @joshbeard (#84)
+
 ## v0.3.0 - 2024-08-02
 
 ### Changes
