@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
@@ -382,7 +383,6 @@ func (c *Client) paginatedRequest(apiRequest *APIRequest, page int) (*APIRespons
 	return apiResponse, true, nil
 }
 
-// fetchAllPages retrieves all pages of data from a paginated endpoint.
 func (c *Client) fetchAllPages(
 	endpoint string,
 	options *RequestOptions,
@@ -393,17 +393,25 @@ func (c *Client) fetchAllPages(
 	var apiResponse *APIResponse
 	var err error
 
+	// Convert the result to a reflect.Value to manipulate the underlying slice
+	resultValue := reflect.ValueOf(result)
+	if resultValue.Kind() != reflect.Ptr || resultValue.Elem().Kind() != reflect.Slice {
+		return nil, fmt.Errorf("result argument must be a pointer to a slice")
+	}
+
 	if options != nil && options.Page != 0 {
 		page = options.Page
 	}
 
 	for {
+		pageResults := reflect.New(resultValue.Elem().Type()).Interface()
+
 		apiRequest := &APIRequest{
 			Method:       "GET",
 			Endpoint:     endpoint,
 			UseAuth:      true,
 			OkStatusCode: []int{200},
-			Response:     result,
+			Response:     pageResults,
 		}
 		if options != nil {
 			apiRequest.RequestOptions = *options
@@ -413,6 +421,9 @@ func (c *Client) fetchAllPages(
 		if err != nil {
 			return apiResponse, fmt.Errorf("unable to retrieve data: %w", err)
 		}
+
+		// Append the current page's results to the original result slice
+		resultValue.Elem().Set(reflect.AppendSlice(resultValue.Elem(), reflect.ValueOf(pageResults).Elem()))
 
 		if !hasNextPage {
 			break

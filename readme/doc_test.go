@@ -1,6 +1,7 @@
 package readme_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/h2non/gock"
@@ -9,65 +10,128 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Docs_Get(t *testing.T) {
-	t.Run("get by slug", func(t *testing.T) {
-		// Arrange
-		expect := testdata.Docs[0]
-		gock.New(TestClient.APIURL).
-			Get(readme.DocEndpoint + "/" + expect.Slug).
-			Reply(200).
-			JSON(expect)
-		defer gock.Off()
+func Test_Doc_Get(t *testing.T) {
+	tc := []struct {
+		name             string
+		input            string
+		slug             string
+		mockResponse     interface{}
+		mockStatus       int
+		expect           readme.Doc
+		expectErr        bool
+		expectErrMsg     string
+		setupSearch      bool
+		mockSearchResult readme.DocSearchResults
+		mockSearchStatus int
+		options          readme.RequestOptions
+	}{
+		{
+			name:         "get by slug",
+			input:        testdata.Docs[0].Slug,
+			slug:         testdata.Docs[0].Slug,
+			mockResponse: testdata.Docs[0],
+			mockStatus:   200,
+			expect:       testdata.Docs[0],
+			expectErr:    false,
+		},
+		{
+			name:             "get by ID",
+			input:            "id:" + testdata.Docs[0].ID,
+			slug:             testdata.Docs[0].Slug,
+			mockResponse:     testdata.Docs[0],
+			mockStatus:       200,
+			expect:           testdata.Docs[0],
+			expectErr:        false,
+			setupSearch:      true,
+			mockSearchResult: testdata.DocSearchResults,
+		},
+		{
+			name:  "invalid ID, no match found",
+			input: "id:" + testdata.Docs[0].ID,
+			mockSearchResult: readme.DocSearchResults{
+				Results: []readme.DocSearchResult{},
+			},
+			mockSearchStatus: 200,
+			expectErr:        true,
+			expectErrMsg:     fmt.Sprintf("no doc found matching id %s (is it hidden?)", testdata.Docs[0].ID),
+			setupSearch:      true,
+		},
+		{
+			name:         "API returns error",
+			input:        testdata.Docs[0].Slug,
+			slug:         testdata.Docs[0].Slug,
+			mockResponse: readme.APIErrorResponse{Error: "INTERNAL_SERVER_ERROR"},
+			mockStatus:   500,
+			expectErr:    true,
+			expectErrMsg: "ReadMe API Error: 500 on GET",
+		},
+		{
+			name:         "get production doc",
+			input:        testdata.Docs[0].Slug,
+			slug:         testdata.Docs[0].Slug,
+			mockResponse: testdata.Docs[0],
+			mockStatus:   200,
+			expect:       testdata.Docs[0],
+			expectErr:    false,
+			options:      readme.RequestOptions{ProductionDoc: true},
+		},
+		{
+			name:             "error searching all docs",
+			input:            "id:" + testdata.Docs[0].ID,
+			expectErr:        true,
+			expectErrMsg:     "ReadMe API Error: 500 on POST",
+			setupSearch:      true,
+			mockSearchStatus: 500,
+		},
+		{
+			name:         "when no slug is provided",
+			input:        "",
+			expectErr:    true,
+			expectErrMsg: "a doc slug or id must be provided",
+		},
+	}
 
-		// Act
-		got, _, err := TestClient.Doc.Get(expect.Slug)
+	for _, tt := range tc {
+		t.Run(tt.name, func(t *testing.T) {
+			// Mock the Search request if necessary
+			if tt.setupSearch {
+				mockStatus := 200
+				if tt.mockSearchStatus != 0 {
+					mockStatus = tt.mockSearchStatus
+				}
+				gock.New(TestClient.APIURL).
+					Post(readme.DocEndpoint + "/search").
+					Reply(mockStatus).
+					JSON(tt.mockSearchResult)
+			}
 
-		// Assert
-		assert.Equal(t, expect, got, "it returns expected Doc struct")
-		assert.NoError(t, err, "it does not return an error")
-		assert.True(t, gock.IsDone(), "it makes the expected API call")
-	})
+			// Mock the Get request
+			if tt.mockResponse != nil {
+				endpoint := readme.DocEndpoint + "/" + tt.slug
+				if tt.options.ProductionDoc {
+					endpoint += "/production"
+				}
+				gock.New(TestClient.APIURL).
+					Get(endpoint).
+					Reply(tt.mockStatus).
+					JSON(tt.mockResponse)
+			}
+			defer gock.OffAll()
 
-	t.Run("get by id", func(t *testing.T) {
-		// Arrange
-		expect := testdata.Docs[0]
-		gock.New(TestClient.APIURL).
-			Post(readme.DocEndpoint + "/search").
-			Reply(200).
-			JSON(testdata.DocSearchResults)
-		gock.New(TestClient.APIURL).
-			Get(readme.DocEndpoint + "/" + expect.Slug).
-			Reply(200).
-			JSON(expect)
-		defer gock.Off()
+			// Act
+			got, _, err := TestClient.Doc.Get(tt.input, tt.options)
 
-		// Act
-		got, _, err := TestClient.Doc.Get("id:" + expect.ID)
-
-		// Assert
-		assert.Equal(t, expect, got, "it returns expected Doc struct")
-		assert.NoError(t, err, "it does not return an error")
-		assert.True(t, gock.IsDone(), "it makes the expected API call")
-	})
-
-	t.Run("returns a production doc when requested", func(t *testing.T) {
-		// Arrange
-		expect := testdata.Docs[0]
-		gock.New(TestClient.APIURL).
-			Get(readme.DocEndpoint + "/" + expect.Slug + "/production").
-			Reply(200).
-			JSON(expect)
-		defer gock.Off()
-
-		reqOpts := readme.RequestOptions{ProductionDoc: true}
-
-		// Act
-		got, _, _ := TestClient.Doc.Get(expect.Slug, reqOpts)
-
-		// Assert
-		assert.Equal(t, expect, got)
-		assert.True(t, gock.IsDone(), "it makes the expected API call")
-	})
+			// Assert
+			if tt.expectErr {
+				assert.Error(t, err, "it returns an error")
+				assert.Contains(t, err.Error(), tt.expectErrMsg, "it returns the expected error message")
+			} else {
+				assert.NoError(t, err, "it does not return an error")
+				assert.Equal(t, tt.expect, got, "it returns expected Doc struct")
+			}
+			assert.True(t, gock.IsDone(), "it makes the expected API call")
+		})
+	}
 }
 
 func Test_Doc_Create(t *testing.T) {

@@ -156,21 +156,12 @@ type CategoryVersionForkedFrom struct {
 
 // CategoryDocs represents a document within a category.
 type CategoryDocs struct {
-	Children []CategoryDocsChildren `json:"children"`
-	Hidden   bool                   `json:"hidden"`
-	ID       string                 `json:"_id"`
-	Order    int                    `json:"order"`
-	Slug     string                 `json:"slug"`
-	Title    string                 `json:"title"`
-}
-
-// CategoryDocsChildren represents a document's children within a category.
-type CategoryDocsChildren struct {
-	Hidden bool   `json:"hidden"`
-	ID     string `json:"_id"`
-	Order  int    `json:"order"`
-	Slug   string `json:"slug"`
-	Title  string `json:"title"`
+	Children []CategoryDocs `json:"children"` // Children is limited by ReadMe to a depth of 2.
+	Hidden   bool           `json:"hidden"`
+	ID       string         `json:"_id"`
+	Order    int            `json:"order"`
+	Slug     string         `json:"slug"`
+	Title    string         `json:"title"`
 }
 
 // validChangelogType validates the 'type' field when creating or updating a changelog.

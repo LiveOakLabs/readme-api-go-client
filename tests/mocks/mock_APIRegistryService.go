@@ -31,6 +31,10 @@ func (_m *MockAPIRegistryService) Create(definition string, version ...string) (
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Create")
+	}
+
 	var r0 readme.APIRegistrySaved
 	var r1 *readme.APIResponse
 	var r2 error
@@ -99,6 +103,10 @@ func (_c *MockAPIRegistryService_Create_Call) RunAndReturn(run func(string, ...s
 // Get provides a mock function with given fields: uuid
 func (_m *MockAPIRegistryService) Get(uuid string) (string, *readme.APIResponse, error) {
 	ret := _m.Called(uuid)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Get")
+	}
 
 	var r0 string
 	var r1 *readme.APIResponse

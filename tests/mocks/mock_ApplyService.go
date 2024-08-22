@@ -24,6 +24,10 @@ func (_m *MockApplyService) EXPECT() *MockApplyService_Expecter {
 func (_m *MockApplyService) Apply(application readme.Application) (readme.ApplyResponse, *readme.APIResponse, error) {
 	ret := _m.Called(application)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Apply")
+	}
+
 	var r0 readme.ApplyResponse
 	var r1 *readme.APIResponse
 	var r2 error
@@ -84,6 +88,10 @@ func (_c *MockApplyService_Apply_Call) RunAndReturn(run func(readme.Application)
 // Get provides a mock function with given fields:
 func (_m *MockApplyService) Get() ([]readme.OpenRole, *readme.APIResponse, error) {
 	ret := _m.Called()
+
+	if len(ret) == 0 {
+		panic("no return value specified for Get")
+	}
 
 	var r0 []readme.OpenRole
 	var r1 *readme.APIResponse

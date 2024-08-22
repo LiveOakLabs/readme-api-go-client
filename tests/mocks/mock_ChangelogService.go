@@ -24,6 +24,10 @@ func (_m *MockChangelogService) EXPECT() *MockChangelogService_Expecter {
 func (_m *MockChangelogService) Create(params readme.ChangelogParams) (readme.Changelog, *readme.APIResponse, error) {
 	ret := _m.Called(params)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Create")
+	}
+
 	var r0 readme.Changelog
 	var r1 *readme.APIResponse
 	var r2 error
@@ -85,6 +89,10 @@ func (_c *MockChangelogService_Create_Call) RunAndReturn(run func(readme.Changel
 func (_m *MockChangelogService) Delete(slug string) (bool, *readme.APIResponse, error) {
 	ret := _m.Called(slug)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Delete")
+	}
+
 	var r0 bool
 	var r1 *readme.APIResponse
 	var r2 error
@@ -145,6 +153,10 @@ func (_c *MockChangelogService_Delete_Call) RunAndReturn(run func(string) (bool,
 // Get provides a mock function with given fields: slug
 func (_m *MockChangelogService) Get(slug string) (readme.Changelog, *readme.APIResponse, error) {
 	ret := _m.Called(slug)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Get")
+	}
 
 	var r0 readme.Changelog
 	var r1 *readme.APIResponse
@@ -212,6 +224,10 @@ func (_m *MockChangelogService) GetAll(options ...readme.RequestOptions) ([]read
 	var _ca []interface{}
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetAll")
+	}
 
 	var r0 []readme.Changelog
 	var r1 *readme.APIResponse
@@ -282,6 +298,10 @@ func (_c *MockChangelogService_GetAll_Call) RunAndReturn(run func(...readme.Requ
 // Update provides a mock function with given fields: slug, params
 func (_m *MockChangelogService) Update(slug string, params readme.ChangelogParams) (readme.Changelog, *readme.APIResponse, error) {
 	ret := _m.Called(slug, params)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Update")
+	}
 
 	var r0 readme.Changelog
 	var r1 *readme.APIResponse
