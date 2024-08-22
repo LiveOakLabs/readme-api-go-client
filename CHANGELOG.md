@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.5.0 - 2024-08-22
+
+### Bug Fixes
+
+* fix: nested category docs (BREAKING CHANGE) @joshbeard (#88)
+  * Previously, category docs that were nested under a parent document were not
+    returned in the response. This has been fixed.
+  * BREAKING CHANGE: The response structure for the `category.GetDocs()` method
+    has changed. The `CategoryDocsChildren` struct has been removed and the
+    existing `CategoryDocs` struct is now used for the nested category docs.
+    The existing `Children` field is present for nested docs, but ReadMe limits
+    the depth of the nested docs to 1 level. (Category -> Parent Doc -> Child)
+  
+* fix: pagination results are incomplete
+  * #84 broke pagination because it didn't properly append the results to the
+    response. This has been fixed.
+  
+
+### Maintenance
+
+- build(deps): bump mvdan.cc/gofumpt from 0.6.0 to 0.7.0 @dependabot (#85)
+- category and docs test updates @joshbeard (#88)
+
 ## v0.4.0 - 2024-08-19
 
 ### Changes
