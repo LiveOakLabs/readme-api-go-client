@@ -54,13 +54,22 @@ var CategoryDocs = []readme.CategoryDocs{
 		Order:  10,
 		Slug:   "documentation",
 		Title:  "Documentation",
-		Children: []readme.CategoryDocsChildren{
+		Children: []readme.CategoryDocs{
 			{
 				Hidden: false,
-				ID:     "63a77777f52b9f006b6bf212",
+				ID:     "63a77777f52b9f006b6bf213",
 				Order:  10,
-				Slug:   "documentation",
-				Title:  "Documentation",
+				Slug:   "child-doc-1",
+				Title:  "Child Doc 1",
+				Children: []readme.CategoryDocs{
+					{
+						Hidden: false,
+						ID:     "63a77777f52b9f006b6bf214",
+						Order:  10,
+						Slug:   "child-doc-1-1",
+						Title:  "child doc 1.1",
+					},
+				},
 			},
 		},
 	},
