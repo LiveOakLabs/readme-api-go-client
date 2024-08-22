@@ -43,10 +43,9 @@ coverage: test ## Generate a code test coverage report using 'gocover-cobertura'
 	@go run github.com/boumenot/gocover-cobertura < coverage.txt > coverage.xml
 	@rm -f coverage.txt
 
-.PHONY: coverage-html
-coverage-html: test ## Generate an HTML test coverage report
-	@go tool cover -html=coverage.txt -o coverage.html
-	@rm -f coverage.txt
+.PHONY: covopen
+test-coverage: test ## Open the HTML test coverage report
+	@go tool cover -html=coverage.txt
 
 ## Vulnerability checks ##
 .PHONY: check-vuln

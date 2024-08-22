@@ -1,6 +1,6 @@
 # Contributing
 
-LiveOak Bank welcomes your interest in contributing to this project in any way
+Live Oak Bank welcomes your interest in contributing to this project in any way
 you find meaningful, be it through code contributions, documentation, or bug
 reporting. We greatly value and appreciate your involvement.
 
@@ -27,6 +27,13 @@ This project uses a few [tools](readme/tools.go) for validating code quality and
 * [govulncheck](https://github.com/golang/vuln) for detecting vulnerabilities in Go packages.
 
 Refer to the [`Makefile`](Makefile) for helpful development tasks.
+
+### Common Tasks
+
+* `make lint` - Run linters and formatters.
+* `make test` - Run all tests.
+* `make test-coverage` - Run tests, generate coverage report, and open in a browser.
+* `make mocks` - Generate mocks for interfaces (used by external tests).
 
 ### Test Data
 
