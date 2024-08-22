@@ -31,6 +31,10 @@ func (_m *MockImageService) Upload(source []byte, filename ...string) (readme.Im
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Upload")
+	}
+
 	var r0 readme.Image
 	var r1 *readme.APIResponse
 	var r2 error

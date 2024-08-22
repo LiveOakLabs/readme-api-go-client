@@ -24,6 +24,10 @@ func (_m *MockVersionService) EXPECT() *MockVersionService_Expecter {
 func (_m *MockVersionService) Create(prams readme.VersionParams) (readme.Version, *readme.APIResponse, error) {
 	ret := _m.Called(prams)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Create")
+	}
+
 	var r0 readme.Version
 	var r1 *readme.APIResponse
 	var r2 error
@@ -84,6 +88,10 @@ func (_c *MockVersionService_Create_Call) RunAndReturn(run func(readme.VersionPa
 // Delete provides a mock function with given fields: version
 func (_m *MockVersionService) Delete(version string) (bool, *readme.APIResponse, error) {
 	ret := _m.Called(version)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Delete")
+	}
 
 	var r0 bool
 	var r1 *readme.APIResponse
@@ -146,6 +154,10 @@ func (_c *MockVersionService_Delete_Call) RunAndReturn(run func(string) (bool, *
 func (_m *MockVersionService) Get(version string) (readme.Version, *readme.APIResponse, error) {
 	ret := _m.Called(version)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Get")
+	}
+
 	var r0 readme.Version
 	var r1 *readme.APIResponse
 	var r2 error
@@ -206,6 +218,10 @@ func (_c *MockVersionService_Get_Call) RunAndReturn(run func(string) (readme.Ver
 // GetAll provides a mock function with given fields:
 func (_m *MockVersionService) GetAll() ([]readme.VersionSummary, *readme.APIResponse, error) {
 	ret := _m.Called()
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetAll")
+	}
 
 	var r0 []readme.VersionSummary
 	var r1 *readme.APIResponse
@@ -269,6 +285,10 @@ func (_c *MockVersionService_GetAll_Call) RunAndReturn(run func() ([]readme.Vers
 func (_m *MockVersionService) GetVersion(version string) (string, error) {
 	ret := _m.Called(version)
 
+	if len(ret) == 0 {
+		panic("no return value specified for GetVersion")
+	}
+
 	var r0 string
 	var r1 error
 	if rf, ok := ret.Get(0).(func(string) (string, error)); ok {
@@ -320,6 +340,10 @@ func (_c *MockVersionService_GetVersion_Call) RunAndReturn(run func(string) (str
 // Update provides a mock function with given fields: version, params
 func (_m *MockVersionService) Update(version string, params readme.VersionParams) (readme.Version, *readme.APIResponse, error) {
 	ret := _m.Called(version, params)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Update")
+	}
 
 	var r0 readme.Version
 	var r1 *readme.APIResponse

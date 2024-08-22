@@ -31,6 +31,10 @@ func (_m *MockCategoryService) Create(response interface{}, params readme.Catego
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Create")
+	}
+
 	var r0 *readme.APIResponse
 	var r1 error
 	if rf, ok := ret.Get(0).(func(interface{}, readme.CategoryParams, ...readme.RequestOptions) (*readme.APIResponse, error)); ok {
@@ -100,6 +104,10 @@ func (_m *MockCategoryService) Delete(slug string, options ...readme.RequestOpti
 	_ca = append(_ca, slug)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Delete")
+	}
 
 	var r0 bool
 	var r1 *readme.APIResponse
@@ -177,6 +185,10 @@ func (_m *MockCategoryService) Get(category string, options ...readme.RequestOpt
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Get")
+	}
+
 	var r0 readme.Category
 	var r1 *readme.APIResponse
 	var r2 error
@@ -251,6 +263,10 @@ func (_m *MockCategoryService) GetAll(options ...readme.RequestOptions) ([]readm
 	var _ca []interface{}
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetAll")
+	}
 
 	var r0 []readme.Category
 	var r1 *readme.APIResponse
@@ -329,6 +345,10 @@ func (_m *MockCategoryService) GetDocs(slug string, options ...readme.RequestOpt
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
+	if len(ret) == 0 {
+		panic("no return value specified for GetDocs")
+	}
+
 	var r0 []readme.CategoryDocs
 	var r1 *readme.APIResponse
 	var r2 error
@@ -406,6 +426,10 @@ func (_m *MockCategoryService) Update(slug string, params readme.CategoryParams,
 	_ca = append(_ca, slug, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Update")
+	}
 
 	var r0 readme.Category
 	var r1 *readme.APIResponse

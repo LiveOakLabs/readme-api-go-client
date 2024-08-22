@@ -24,6 +24,10 @@ func (_m *MockProjectService) EXPECT() *MockProjectService_Expecter {
 func (_m *MockProjectService) Get() (readme.Project, *readme.APIResponse, error) {
 	ret := _m.Called()
 
+	if len(ret) == 0 {
+		panic("no return value specified for Get")
+	}
+
 	var r0 readme.Project
 	var r1 *readme.APIResponse
 	var r2 error

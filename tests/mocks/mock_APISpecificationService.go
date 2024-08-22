@@ -31,6 +31,10 @@ func (_m *MockAPISpecificationService) Create(definition string, options ...read
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Create")
+	}
+
 	var r0 readme.APISpecificationSaved
 	var r1 *readme.APIResponse
 	var r2 error
@@ -100,6 +104,10 @@ func (_c *MockAPISpecificationService_Create_Call) RunAndReturn(run func(string,
 func (_m *MockAPISpecificationService) Delete(specID string) (bool, *readme.APIResponse, error) {
 	ret := _m.Called(specID)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Delete")
+	}
+
 	var r0 bool
 	var r1 *readme.APIResponse
 	var r2 error
@@ -167,6 +175,10 @@ func (_m *MockAPISpecificationService) Get(specID string, options ...readme.Requ
 	_ca = append(_ca, specID)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Get")
+	}
 
 	var r0 readme.APISpecification
 	var r1 *readme.APIResponse
@@ -243,6 +255,10 @@ func (_m *MockAPISpecificationService) GetAll(_a0 ...readme.RequestOptions) ([]r
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
+	if len(ret) == 0 {
+		panic("no return value specified for GetAll")
+	}
+
 	var r0 []readme.APISpecification
 	var r1 *readme.APIResponse
 	var r2 error
@@ -313,6 +329,10 @@ func (_c *MockAPISpecificationService_GetAll_Call) RunAndReturn(run func(...read
 func (_m *MockAPISpecificationService) Update(specID string, definition string) (readme.APISpecificationSaved, *readme.APIResponse, error) {
 	ret := _m.Called(specID, definition)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Update")
+	}
+
 	var r0 readme.APISpecificationSaved
 	var r1 *readme.APIResponse
 	var r2 error
@@ -374,6 +394,10 @@ func (_c *MockAPISpecificationService_Update_Call) RunAndReturn(run func(string,
 // UploadDefinition provides a mock function with given fields: method, content, url, version, response
 func (_m *MockAPISpecificationService) UploadDefinition(method string, content string, url string, version string, response interface{}) (interface{}, *readme.APIResponse, error) {
 	ret := _m.Called(method, content, url, version, response)
+
+	if len(ret) == 0 {
+		panic("no return value specified for UploadDefinition")
+	}
 
 	var r0 interface{}
 	var r1 *readme.APIResponse

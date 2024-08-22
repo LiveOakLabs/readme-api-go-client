@@ -31,6 +31,10 @@ func (_m *MockDocService) Create(params readme.DocParams, options ...readme.Requ
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Create")
+	}
+
 	var r0 readme.Doc
 	var r1 *readme.APIResponse
 	var r2 error
@@ -106,6 +110,10 @@ func (_m *MockDocService) Delete(slug string, options ...readme.RequestOptions) 
 	_ca = append(_ca, slug)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Delete")
+	}
 
 	var r0 bool
 	var r1 *readme.APIResponse
@@ -183,6 +191,10 @@ func (_m *MockDocService) Get(doc string, options ...readme.RequestOptions) (rea
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
+	if len(ret) == 0 {
+		panic("no return value specified for Get")
+	}
+
 	var r0 readme.Doc
 	var r1 *readme.APIResponse
 	var r2 error
@@ -258,6 +270,10 @@ func (_m *MockDocService) Search(query string, options ...readme.RequestOptions)
 	_ca = append(_ca, query)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Search")
+	}
 
 	var r0 []readme.DocSearchResult
 	var r1 *readme.APIResponse
@@ -336,6 +352,10 @@ func (_m *MockDocService) Update(slug string, params readme.DocParams, options .
 	_ca = append(_ca, slug, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Update")
+	}
 
 	var r0 readme.Doc
 	var r1 *readme.APIResponse
