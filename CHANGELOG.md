@@ -1,10 +1,19 @@
 # Changelog
 
+## v0.5.1 - 2024-08-22
+
+This release contains no functional changes.
+
+### Changes
+
+- docs: version disclaimer, cleanups @joshbeard (#91)
+
 ## v0.5.0 - 2024-08-22
 
 ### Bug Fixes
 
 * fix: nested category docs (BREAKING CHANGE) @joshbeard (#88)
+  
   * Previously, category docs that were nested under a parent document were not
     returned in the response. This has been fixed.
   * BREAKING CHANGE: The response structure for the `category.GetDocs()` method
@@ -14,6 +23,7 @@
     the depth of the nested docs to 1 level. (Category -> Parent Doc -> Child)
   
 * fix: pagination results are incomplete
+  
   * #84 broke pagination because it didn't properly append the results to the
     response. This has been fixed.
   
