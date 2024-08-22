@@ -3,11 +3,17 @@
 [![Version](https://img.shields.io/github/v/release/liveoaklabs/readme-api-go-client)](https://github.com/liveoaklabs/readme-api-go-client/releases)
 [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://pkg.go.dev/github.com/liveoaklabs/readme-api-go-client?tab=doc)
 
-This is a Go client library for the [ReadMe.com](https://readme.com) API.
+<img align="right" width="200" src=".github/readme/lob-logo.png">
 
-![Live Oak Bank](.github/readme/lob-logo.png)
+A Go client library for the [ReadMe.com](https://readme.com) API.
 
-This package is developed by [Live Oak Bank](https://liveoakbank.com) and is not affiliated with ReadMe.com.
+📖 Refer to <https://pkg.go.dev/github.com/liveoaklabs/readme-api-go-client> for the Go package documentation.
+
+☁️ Also see our [Terraform provider for ReadMe](https://github.com/liveoaklabs/terraform-provider-readme)
+that uses this client library.
+
+_This library is developed by [Live Oak Bank](https://liveoakbank.com) and is
+not officially associated with ReadMe.com._
 
 ## Getting Started
 
@@ -43,17 +49,21 @@ if specs == nil {
 }
 ```
 
-## Reference
+## Disclaimer About Versioning and Development Status
 
-Refer to <https://pkg.go.dev/github.com/liveoaklabs/readme-api-go-client> for the Go package documentation.
+⚠️ This project is currently under active development and is versioned using
+the `0.x.x` scheme. Breaking changes are likely and will result in an
+increment to the minor version (e.g., `0.2.0` to `0.3.0).` Users are strongly
+advised not to automatically update to new minor or major versions without
+thoroughly testing, as the API and functionality may change significantly
+between releases.
+
+A stable `1.x` release is planned for the future once the project meets
+certain criteria for feature completeness and stability.
 
 ## Contributing
 
 Refer to [`CONTRIBUTING.md`](CONTRIBUTING.md) for information on contributing to this project.
-
-## Related
-
-The [Terraform provider for ReadMe](https://github.com/liveoaklabs/terraform-provider-readme) uses this client library.
 
 ## License
 
