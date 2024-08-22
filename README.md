@@ -5,12 +5,10 @@
 
 <img align="right" width="200" src=".github/readme/lob-logo.png">
 
-A Go client library for the [ReadMe.com](https://readme.com) API.
-
 📖 Refer to <https://pkg.go.dev/github.com/liveoaklabs/readme-api-go-client> for the Go package documentation.
 
 ☁️ Also see our [Terraform provider for ReadMe](https://github.com/liveoaklabs/terraform-provider-readme)
-that uses this client library.
+that uses this library.
 
 _This library is developed by [Live Oak Bank](https://liveoakbank.com) and is
 not officially associated with ReadMe.com._
