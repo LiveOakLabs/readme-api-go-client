@@ -1,6 +1,7 @@
-# Makefile for readme-api-go-client.
 # Run 'make help' for a list of targets.
 .DEFAULT_GOAL := help
+
+PKG_PATH := readme
 
 .PHONY: help
 help: ## Shows this help
@@ -17,11 +18,11 @@ gofumpt: vet ## Check linting with 'gofumpt'
 
 .PHONY: lines
 lines: ## Check long lines.
-	@go run github.com/segmentio/golines -m 120 --dry-run readme/*.go
+	@go run github.com/segmentio/golines -m 120 --dry-run $(PKG_PATH)/
 
 .PHONY: lines-fix
 lines-fix: lines ## Fix long lines
-	@go run github.com/segmentio/golines -m 120 -w readme/*.go
+	@go run github.com/segmentio/golines -m 120 -w $(PKG_PATH)/
 
 .PHONY: golangci-lint
 golangci-lint: ## Lint using 'golangci-lint'
@@ -34,8 +35,8 @@ lint: gofumpt vet lines golangci-lint ## Run all linters
 ## Testing ##
 .PHONY: test
 test: ## Run unit and race tests with 'go test'
-	@go test -count=1 -coverprofile=coverage.txt -covermode count ./readme/...
-	@go test -race -short ./readme/...
+	@go test -count=1 -coverprofile=coverage.txt -covermode count ./$(PKG_PATH)/...
+	@go test -race -short ./$(PKG_PATH)/...
 
 ## Coverage ##
 .PHONY: coverage
@@ -43,7 +44,7 @@ coverage: test ## Generate a code test coverage report using 'gocover-cobertura'
 	@go run github.com/boumenot/gocover-cobertura < coverage.txt > coverage.xml
 	@rm -f coverage.txt
 
-.PHONY: covopen
+.PHONY: test-coverage
 test-coverage: test ## Open the HTML test coverage report
 	@go tool cover -html=coverage.txt
 

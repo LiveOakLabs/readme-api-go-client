@@ -50,14 +50,18 @@ if specs == nil {
 ## Disclaimer About Versioning and Development Status
 
 ⚠️ This project is currently under active development and is versioned using
-the `0.x.x` scheme. Breaking changes are likely and will result in an
-increment to the minor version (e.g., `0.2.0` to `0.3.0).` Users are strongly
-advised not to automatically update to new minor or major versions without
-thoroughly testing, as the API and functionality may change significantly
-between releases.
+the `0.x.x` scheme.
+
+Breaking changes will likely occur and will trigger a minor version increment
+(e.g., `0.2.0->0.3.0`).
+
+Users are encouraged to pin the package to a specific patch version for
+maximum stability throughout the `0.x.x` series.
 
 A stable `1.x` release is planned for the future once the project meets
 certain criteria for feature completeness and stability.
+
+Refer to the [CHANGELOG](CHANGELOG.md) for release details.
 
 ## Contributing
 
