@@ -4,7 +4,7 @@ go 1.22.0
 toolchain go1.23.0
 
 require (
-	github.com/boumenot/gocover-cobertura v1.2.0
+	github.com/boumenot/gocover-cobertura v1.3.0
 	github.com/golangci/golangci-lint v1.61.0
 	github.com/h2non/gock v1.2.0
 	github.com/princjef/gomarkdoc v1.1.0
